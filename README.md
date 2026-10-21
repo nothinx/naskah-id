@@ -76,27 +76,55 @@ ternyata tidak ada.
 
 ## Pemasangan
 
-**Agen apa pun yang mendukung `npx skills`** (Claude Code, Codex, Cursor, Gemini CLI, dan
-lainnya):
+### Lewat `npx skills` (Claude Code, Codex, Cursor, Gemini CLI, dan agen lain)
+
+Butuh Node.js 18 atau lebih baru.
 
 ```bash
-npx skills add nothinx/naskah-id
+npx skills add nothinx/naskah-id        # untuk proyek di folder ini saja
+npx skills add nothinx/naskah-id -g     # untuk semua proyek
 ```
 
-**Claude Code sebagai plugin:**
+Perintah ini menanyakan agen mana yang dipasangi. Untuk memperbarui skill, jalankan ulang
+perintah yang sama.
+
+### Claude Code sebagai plugin
+
+Ketik di dalam sesi Claude Code:
 
 ```
 /plugin marketplace add nothinx/naskah-id
 /plugin install naskah-id@naskah-id
 ```
 
-**Codex:** salin folder repo ke `~/.codex/skills/naskah-id`. Berkas `agents/openai.yaml` sudah
-disertakan.
+Untuk memperbarui: `/plugin marketplace update naskah-id`.
 
-**Claude.ai:** unduh repo sebagai ZIP, lalu unggah sebagai skill kustom di pengaturan Claude.ai.
+### Salin manual (Codex dan agen lain)
 
-**Manual:** salin folder repo ke folder skill agen Anda. Yang wajib ada hanya `SKILL.md`,
-`KONTRAK.md`, `references/`, dan `contoh/`.
+```bash
+git clone https://github.com/nothinx/naskah-id.git ~/.codex/skills/naskah-id
+```
+
+Ganti `~/.codex/skills` dengan folder skill agen Anda, misalnya `~/.claude/skills` untuk
+Claude Code atau `~/.cursor/skills` untuk Cursor. Di Windows, `~` berarti folder pengguna
+(`C:\Users\<nama-pengguna>`). Berkas `agents/openai.yaml` untuk Codex sudah disertakan. Untuk
+memperbarui, jalankan `git pull` di folder itu.
+
+### Claude.ai
+
+1. Buat ZIP berisi folder `naskah-id` yang di dalamnya langsung ada `SKILL.md`. ZIP unduhan
+   GitHub berisi folder `naskah-id-main`; ubah dulu nama foldernya menjadi `naskah-id`, lalu
+   kompres ulang.
+2. Di Claude.ai, buka pengaturan, bagian skill, lalu unggah ZIP itu sebagai skill kustom.
+   Bila diminta, aktifkan dulu fitur eksekusi kode.
+
+### Cek pemasangan
+
+Mulai sesi baru, lalu minta: `Cek ejaan kalimat ini: Data di analisis dengan SPSS.` Agen yang
+memuat skill akan mengoreksi `di analisis` menjadi "dianalisis" tanpa mengubah bagian lain.
+
+Pemeriksa `scripts/periksa.py` bersifat opsional dan butuh Python 3.7 atau lebih baru, tanpa
+pustaka tambahan.
 
 ## Cara pakai
 
