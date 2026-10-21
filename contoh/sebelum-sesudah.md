@@ -18,10 +18,9 @@ Contoh kutipan dari artikel jurnal sungguhan, beserta lisensinya, ada di `contoh
 > pemantauan uji emisi.
 <!-- periksa:lanjut -->
 
-> **Natural:** Hasil uji emisi kendaraan di unit pelaksana uji berkala masih dicatat manual
-> sehingga satu kendaraan membutuhkan sekitar 15 menit dan hasilnya rawan salah salin.
-> Penelitian ini merancang sistem pemantauan berbasis *Internet of Things* (IoT) yang mengirim
-> hasil uji langsung ke basis data saat pengujian berlangsung.
+> **Natural:** Hasil uji emisi kendaraan masih dicatat manual dan memakan waktu sekitar 15 menit
+> per kendaraan. Penelitian ini merancang sistem berbasis *Internet of Things* (IoT) untuk
+> memantau hasil uji emisi secara langsung (*real-time*).
 
 Yang diubah: pembuka kosmik dan penegas dibuang (AI-01, AI-03), `memainkan peran` (AI-05),
 `berbagai macam` (KE-06), `di mana` (AI-14), dan subjek yang hilang (KE-01). Angka 15 menit
@@ -112,9 +111,8 @@ diuji sehingga diganti penanda: pengguna perlu menyebut upaya apa yang diteliti.
 > informan 3 (Ketua Adat): "Kalau sudah dibawa ke balai, orang malu melawan."
 <!-- periksa:lanjut -->
 
-> **Natural:** Para informan menyebut tokoh adat sebagai penengah utama dalam konflik lahan.
-> Informan 3 (ketua adat) menjelaskan mengapa jalur adat dipatuhi: "Kalau sudah dibawa ke
-> balai, orang malu melawan."
+> **Natural:** Menurut para informan, tokoh adat berperan penting dalam penyelesaian konflik
+> lahan. Informan 3 (ketua adat) mengatakan, "Kalau sudah dibawa ke balai, orang malu melawan."
 
 Kutipan informan tidak disunting sama sekali, termasuk ragam lisannya. "Ketua Adat" ditulis
 huruf kecil karena tidak diikuti nama orang.

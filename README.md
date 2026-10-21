@@ -1,19 +1,23 @@
 # naskah-id
 
 Skill agen AI untuk menulis dan menyunting karya ilmiah berbahasa Indonesia: artikel jurnal,
-skripsi, tesis, proposal hibah, laporan penelitian. Hasilnya baku menurut EYD V dan KBBI,
-enak dibaca, dan tidak mengubah satu pun angka, hasil, atau sitasi Anda.
+skripsi, tesis, proposal hibah, dan laporan penelitian. Ejaan dan kata mengikuti EYD V dan
+KBBI. Angka, hasil, dan sitasi Anda tidak diubah.
+
+README ini juga disunting dengan skill ini. Catatan lengkapnya, termasuk lima kesalahan yang
+ditemukan di versi sebelumnya, ada di [contoh/readme-ini.md](contoh/readme-ini.md).
 
 ## Lima tanda terkuat
 
-Tanda-tanda ini paling sering membuat naskah Indonesia terasa ditulis mesin atau diterjemahkan
-kata per kata. Penulis manusia juga sering memakainya, jadi anggap ini kebiasaan yang perlu
-diperbaiki, bukan bukti.
+Kelima tanda ini sering membuat naskah Indonesia terasa ditulis mesin atau diterjemahkan kata
+per kata. Penulis manusia juga memakainya, jadi anggap ini kebiasaan yang perlu diperbaiki,
+bukan bukti. Pada setiap contoh, versi kedua hanya memakai fakta yang sudah ada di versi
+pertama.
 
 **1. Pembuka kosmik**
 
 <!-- periksa:abaikan -->
-> Di era digital ini, tidak dapat dipungkiri bahwa teknologi informasi berkembang pesat.
+> Di era digital ini, tidak dapat dipungkiri bahwa Puskesmas di Kabupaten X masih mencatat kunjungan ibu hamil di buku register.
 <!-- periksa:lanjut -->
 
 > Puskesmas di Kabupaten X masih mencatat kunjungan ibu hamil di buku register.
@@ -29,10 +33,10 @@ diperbaiki, bukan bukti.
 **3. Perangkai tiruan bahasa Inggris**
 
 <!-- periksa:abaikan -->
-> Penelitian dilakukan di Desa Sukamaju di mana orang tua memainkan peran penting.
+> Penelitian dilakukan di Desa Sukamaju di mana kelompok tani memainkan peran penting dalam distribusi pupuk.
 <!-- periksa:lanjut -->
 
-> Penelitian dilakukan di Desa Sukamaju, tempat orang tua berperan penting.
+> Penelitian dilakukan di Desa Sukamaju, tempat kelompok tani berperan penting dalam distribusi pupuk.
 
 **4. "Hal ini" dan penghubung yang sama di setiap paragraf**
 
@@ -40,23 +44,24 @@ diperbaiki, bukan bukti.
 > Kadar hemoglobin responden rendah. Hal ini menunjukkan bahwa asupan zat besi kurang. Selain itu, …
 <!-- periksa:lanjut -->
 
-> Kadar hemoglobin responden rendah. Kadar serendah ini sejalan dengan asupan zat besi yang kurang.
+> Kadar hemoglobin responden rendah. Kadar serendah ini menunjukkan bahwa asupan zat besi kurang.
 
 **5. Klaim digelembungkan**
 
 <!-- periksa:abaikan -->
-> Terdapat peningkatan yang sangat signifikan sehingga model ini merupakan solusi yang inovatif.
+> Rerata skor naik dari 61,2 menjadi 74,5 dengan peningkatan yang sangat signifikan (p < 0,001) sehingga model ini merupakan solusi yang inovatif.
 <!-- periksa:lanjut -->
 
-> Rerata skor naik dari 61,2 menjadi 74,5 (uji-*t* berpasangan, *p* < 0,001).
+> Rerata skor naik dari 61,2 menjadi 74,5 (*p* < 0,001).
 
-Angka pada contoh terakhir harus berasal dari data Anda. Bila datanya belum ada, skill menulis
-`[PERLU DATA: …]` dan tidak mengarang angka.
+Klaim `solusi yang inovatif` dibuang karena tidak ada data yang mendukungnya. Bila sebuah
+kalimat butuh angka yang belum Anda berikan, skill menulis `[PERLU DATA: …]` dan tidak
+mengarang angka.
 
-## Apa ini, dan apa yang bukan
+## Apa ini dan apa yang bukan
 
-Skill ini membantu Anda menulis lebih baik. Ia memperbaiki ejaan dan kalimat, menyusun bagian
-naskah dari bahan yang Anda berikan, dan menandai klaim yang belum didukung rujukan.
+Skill ini memperbaiki ejaan dan kalimat, menyusun bagian naskah dari bahan yang Anda berikan,
+dan menandai klaim yang belum didukung rujukan.
 
 Skill ini **bukan** alat untuk meloloskan teks dari detektor AI atau Turnitin, dan **bukan**
 detektor AI. Pola bahasa tidak bisa membuktikan siapa yang menulis sebuah teks, jadi jangan
@@ -139,9 +144,9 @@ berbahasa Indonesia.
 | "Buat abstrak dari hasil berikut, target jurnal SINTA 2 bidang kesehatan." | Tulis: abstrak dari bahan Anda, dengan penanda untuk data yang kurang. |
 | "Saya pakai AI untuk merapikan bab 2. Apa yang harus saya cantumkan?" | Draf pernyataan penggunaan AI sesuai sasaran. |
 
-Sebutkan jurnal atau kampus sasaran bila ada. Agen akan membaca templat dan beberapa artikel
-terbitan jurnal itu lebih dulu untuk mengikuti struktur, gaya sitasi, sudut pandang, dan
-istilah bidangnya.
+Sebutkan jurnal atau kampus sasaran bila ada. Bila agen punya akses web, ia membaca templat dan
+beberapa artikel terbitan jurnal itu lebih dulu untuk mengikuti struktur, gaya sitasi, sudut
+pandang, dan istilah bidangnya. Bila tidak, agen mengatakan bahwa konvensi jurnal belum dicek.
 
 ## Cara kerja
 
@@ -192,8 +197,10 @@ naskah.md:4: [KE-01 K] 'Dari hasil pengujian menunjukkan': subjek hilang karena 
 naskah.md:9: [KB-01 K] 'analisa': baku: analisis
 ```
 
-Pemeriksa ini sengaja sederhana. Ia akan melewatkan sebagian masalah dan sesekali menandai
-kalimat yang sebenarnya benar. Bacalah setiap temuan dalam konteksnya.
+Pemeriksa ini sengaja sederhana. Pada [uji abstrak nyata](contoh/korpus/uji-abstrak-pendidikan.md),
+ia menemukan 4 masalah dan melewatkan 6 lainnya yang baru tertangkap saat dibaca. Pada README
+versi sebelumnya, ia tidak menemukan apa pun, padahal ada lima kesalahan isi. Pakai pemeriksa
+sebagai penyaring awal, lalu baca setiap temuan dalam konteksnya.
 
 ## Pernyataan penggunaan AI
 
@@ -221,7 +228,8 @@ Struktur repo terinspirasi dari [blader/humanizer](https://github.com/blader/hum
 [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop),
 [conorbronsdon/avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing), dan
 [AIScientists-Dev/academic-humanizer](https://github.com/AIScientists-Dev/academic-humanizer).
-Seluruh teks di repo ini ditulis sendiri untuk bahasa Indonesia.
+Teks repo ini ditulis sendiri untuk bahasa Indonesia, kecuali kutipan berlisensi CC BY-SA di
+`contoh/korpus/` yang atribusinya dicantumkan per kutipan.
 
 ## Kontribusi
 

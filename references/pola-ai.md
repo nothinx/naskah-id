@@ -10,6 +10,9 @@ perlu ditindak kalau muncul bersama tanda lain atau berulang.
 
 Semua pola ini sinyal, bukan bukti. Penulis manusia juga memakainya.
 
+Pada setiap pasangan, versi Sesudah hanya memakai fakta yang ada di versi Sebelum. Bila perbaikan
+butuh fakta yang belum ada, contoh memakai penanda `[PERLU DATA: …]` atau `[PERLU RUJUKAN: …]`.
+
 ## A. Pembuka dan penutup ritual
 
 ### AI-01, AI-02 · Pembuka kosmik (AI)
@@ -17,15 +20,16 @@ Semua pola ini sinyal, bukan bukti. Penulis manusia juga memakainya.
 - **Waspadai:** Di era digital ini; Seiring perkembangan zaman; Di tengah pesatnya kemajuan teknologi
 - **Masalahnya:** kalimat ini cocok untuk naskah apa saja, jadi tidak memberi tahu pembaca apa
   pun. Penelaah jurnal sering melewatkannya.
-- **Sebelum:** Di era digital ini, teknologi informasi berkembang pesat di berbagai bidang kehidupan.
-- **Sesudah:** Puskesmas di Kabupaten X masih mencatat kunjungan ibu hamil di buku register sehingga laporan bulanan baru selesai dua minggu setelah bulan berakhir. [PERLU DATA: sumber angka dua minggu]
+- **Sebelum:** Di era digital ini, Puskesmas di Kabupaten X masih mencatat kunjungan ibu hamil di buku register.
+- **Sesudah:** Puskesmas di Kabupaten X masih mencatat kunjungan ibu hamil di buku register.
+- **Bila pembukanya tanpa isi sama sekali:** `Di era digital ini, teknologi informasi berkembang pesat.` Jangan mengarang masalah konkret; tanyakan kepada pengguna atau tulis [PERLU DATA: masalah konkret yang melatarbelakangi penelitian].
 
 ### AI-03, AI-04 · Penegas tanpa isi (AI)
 
 - **Waspadai:** Tidak dapat dipungkiri bahwa; Seperti yang kita ketahui bersama; Sudah menjadi rahasia umum
 - **Masalahnya:** penegas menggantikan bukti. Bila klaimnya memang mapan, cukup sertakan rujukan.
 - **Sebelum:** Tidak dapat dipungkiri bahwa literasi digital guru masih rendah.
-- **Sesudah:** Survei [PERLU RUJUKAN: survei literasi digital guru] mencatat bahwa sebagian besar guru belum pernah memakai platform pembelajaran daring.
+- **Sesudah:** Literasi digital guru masih rendah [PERLU RUJUKAN: survei literasi digital guru].
 
 ### AI-18 · Penutup ringkasan di setiap paragraf (AI, lemah bila sendirian)
 
@@ -38,8 +42,8 @@ Semua pola ini sinyal, bukan bukti. Penulis manusia juga memakainya.
 
 - **Waspadai:** Mari kita bahas; Perlu diingat bahwa; Penting untuk dipahami bahwa
 - **Masalahnya:** naskah ilmiah tidak mengajak pembaca berbincang. Nyatakan isinya.
-- **Sebelum:** Perlu diingat bahwa sampel penelitian ini terbatas.
-- **Sesudah:** Sampel penelitian ini terbatas pada dua sekolah sehingga hasilnya belum dapat digeneralisasi.
+- **Sebelum:** Perlu diingat bahwa sampel penelitian ini terbatas pada dua sekolah.
+- **Sesudah:** Sampel penelitian ini terbatas pada dua sekolah.
 
 ## B. Kalke Inggris
 
@@ -61,7 +65,7 @@ Semua pola ini sinyal, bukan bukti. Penulis manusia juga memakainya.
 - **Waspadai:** yang mana; sesuatu yang mana; dalam mana
 - **Masalahnya:** tiruan *which*. Pakai "yang" saja atau pecah kalimatnya.
 - **Sebelum:** Nilai galat cukup besar, yang mana hal ini memengaruhi akurasi.
-- **Sesudah:** Nilai galat cukup besar. Galat ini menurunkan akurasi.
+- **Sesudah:** Nilai galat cukup besar. Galat ini memengaruhi akurasi.
 
 ### AI-05, AI-06, AI-08 · Frasa verba Inggris (AI)
 
@@ -88,7 +92,7 @@ Semua pola ini sinyal, bukan bukti. Penulis manusia juga memakainya.
 - **Waspadai:** hal ini menunjukkan; hal ini disebabkan; hal tersebut, tiga kali atau lebih dalam satu teks
 - **Masalahnya:** `hal ini` menunjuk sesuatu yang kabur. Pembaca harus menebak apa yang dimaksud.
 - **Sebelum:** Kadar hemoglobin responden rendah. Hal ini menunjukkan bahwa asupan zat besi kurang.
-- **Sesudah:** Kadar hemoglobin responden rendah. Kadar serendah ini sejalan dengan asupan zat besi yang kurang.
+- **Sesudah:** Kadar hemoglobin responden rendah. Kadar serendah ini menunjukkan bahwa asupan zat besi kurang.
 
 ### AI-16, AI-17, AI-19 · Penghubung pembuka di setiap paragraf (AI, lemah bila sendirian)
 
@@ -112,21 +116,21 @@ Semua pola ini sinyal, bukan bukti. Penulis manusia juga memakainya.
 - **Waspadai:** sangat signifikan; signifikan (tanpa uji statistik); peningkatan yang luar biasa
 - **Masalahnya:** "signifikan" dalam naskah kuantitatif bermakna statistik. Signifikansi tidak
   bertingkat; yang bertingkat adalah besar efeknya.
-- **Sebelum:** Terdapat peningkatan yang sangat signifikan pada skor pascatest.
-- **Sesudah:** Rerata skor naik dari 61,2 menjadi 74,5 (uji-*t* berpasangan, *p* < 0,001).
+- **Sebelum:** Terdapat peningkatan yang sangat signifikan pada skor pascatest (p < 0,001).
+- **Sesudah:** Skor pascatest meningkat secara signifikan (*p* < 0,001). [PERLU DATA: rerata skor sebelum dan sesudah, serta nama uji statistiknya]
 
 ### AI-07, AI-09 · Penguat bertumpuk dan klaim promosi (AI)
 
 - **Waspadai:** memegang peranan yang sangat krusial; solusi yang inovatif; sangat efektif dan efisien
 - **Masalahnya:** kata sifat menggantikan bukti. Penelaah akan bertanya: inovatif dibanding apa?
 - **Sebelum:** Aplikasi ini merupakan salah satu solusi yang inovatif untuk masalah antrean.
-- **Sesudah:** Aplikasi ini memangkas waktu tunggu rata-rata dari 42 menjadi 18 menit. [PERLU DATA: hasil uji waktu tunggu]
+- **Sesudah:** Aplikasi ini dirancang untuk mengurangi antrean. [PERLU DATA: waktu tunggu sebelum dan sesudah aplikasi dipakai]
 
 ### Tiga sifat berderet (AI, lemah bila sendirian)
 
 - **Waspadai:** efektif, efisien, dan inovatif; cepat, tepat, dan akurat
 - **Masalahnya:** pola tiga serangkai terdengar lengkap tetapi jarang dibuktikan satu per satu.
-- **Sebelum:** Model ini terbukti efektif, efisien, dan andal.
+- **Sebelum:** Model ini terbukti efektif, efisien, dan andal dengan akurasi 91% dan waktu inferensi 40 ms per citra.
 - **Sesudah:** Model ini mencapai akurasi 91% dengan waktu inferensi 40 ms per citra.
 
 ### AI-10 · Kontras formulaik (AI, lemah bila sendirian)
@@ -134,7 +138,7 @@ Semua pola ini sinyal, bukan bukti. Penulis manusia juga memakainya.
 - **Waspadai:** Lebih dari sekadar X, Y adalah…; bukan hanya … tetapi juga … yang tidak perlu; tidak hanya … namun juga … di setiap paragraf
 - **Masalahnya:** struktur retoris yang memberi kesan dalam tanpa menambah isi.
   "Bukan hanya … tetapi juga …" sendiri baku; yang jadi masalah adalah pemakaiannya berulang.
-- **Sebelum:** Lebih dari sekadar ritual, upacara ini adalah cermin identitas masyarakat.
+- **Sebelum:** Lebih dari sekadar ritual, upacara ini adalah penanda keanggotaan marga karena hanya warga marga yang boleh memimpinnya.
 - **Sesudah:** Upacara ini juga menjadi penanda keanggotaan marga: hanya warga marga yang boleh memimpinnya.
 
 ### Kata payung kosong (AI)
@@ -142,7 +146,7 @@ Semua pola ini sinyal, bukan bukti. Penulis manusia juga memakainya.
 - **Waspadai:** berbagai aspek; faktor-faktor tertentu; dimensi kehidupan; peran strategis
 - **Masalahnya:** kata payung menunda isi. Sebut variabelnya.
 - **Sebelum:** Kepatuhan minum obat dipengaruhi berbagai aspek.
-- **Sesudah:** Kepatuhan minum obat dipengaruhi jarak ke fasilitas kesehatan, efek samping, dan dukungan keluarga [PERLU RUJUKAN: faktor kepatuhan minum obat].
+- **Sesudah:** Kepatuhan minum obat dipengaruhi [PERLU DATA: variabel yang diteliti, misalnya dari kerangka konsep penelitian].
 
 ## E. Ritme dan struktur
 
