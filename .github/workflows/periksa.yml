@@ -1,0 +1,13 @@
+name: periksa
+on: [push, pull_request]
+jobs:
+  periksa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/periksa.py --tes
+      - run: python -c "import json; [json.load(open(f, encoding='utf-8')) for f in ['evals/cases.json', '.claude-plugin/plugin.json', '.claude-plugin/marketplace.json']]"
+      - run: python scripts/periksa.py *.md references/*.md contoh/*.md contoh/korpus/*.md

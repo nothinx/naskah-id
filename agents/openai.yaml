@@ -1,0 +1,4 @@
+interface:
+  display_name: "Naskah ID"
+  short_description: "Sunting naskah ilmiah berbahasa Indonesia tanpa mengubah fakta"
+  default_prompt: "Pakai $naskah-id untuk merapikan bahasa naskah ini tanpa mengubah angka, hasil, atau sitasi."

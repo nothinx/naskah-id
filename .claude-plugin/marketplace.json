@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "naskah-id",
+  "owner": {
+    "name": "nothinx",
+    "url": "https://github.com/nothinx"
+  },
+  "description": "Pasang naskah-id sebagai plugin Claude Code.",
+  "plugins": [
+    {
+      "name": "naskah-id",
+      "source": "./",
+      "description": "Menulis dan menyunting karya ilmiah berbahasa Indonesia yang natural, baku (EYD V, KBBI), dan jujur.",
+      "license": "MIT",
+      "keywords": ["bahasa-indonesia", "penulisan-ilmiah", "eyd", "kbbi", "skripsi", "jurnal"]
+    }
+  ]
+}
