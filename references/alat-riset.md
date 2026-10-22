@@ -6,17 +6,19 @@ dipakai pengguna untuk menyambungkannya sendiri.
 
 | Alat | Gunanya | Akun | Cara tersedia |
 | --- | --- | --- | --- |
-| OpenAlex | cari karya, abstrak, BibTeX, cek keberadaan rujukan, siapa yang mengutip | tidak perlu; kunci API gratis dianjurkan | `scripts/openalex.py`, ikut terpasang bersama skill |
+| OpenAlex dan Crossref | cari karya, abstrak, entri APA/IEEE/BibTeX, cek satu rujukan atau seluruh daftar pustaka, siapa yang mengutip | tidak perlu; kunci API OpenAlex gratis dianjurkan | `scripts/openalex.py`, ikut terpasang bersama skill |
 | Consensus | sintesis temuan: "apa kata riset tentang X" | akun Consensus | server MCP |
 | alphaXiv | praterbit arXiv beserta ringkasan | akun alphaXiv | server MCP |
 | PubMed | literatur kesehatan dan biomedis | tidak perlu | konektor claude.ai |
 
-## OpenAlex (selalu tersedia)
+## OpenAlex dan Crossref (selalu tersedia)
 
 ```bash
 python scripts/openalex.py cari "stunting pola asuh" --tahun 2020-2026
-python scripts/openalex.py cek "Judul persis artikel" --doi 10.xxxx/yyyy
+python scripts/openalex.py cek "Judul persis artikel" --penulis "Santoso, Dewi" --tahun 2021
+python scripts/openalex.py daftar pustaka.txt
 python scripts/openalex.py doi 10.33007/ska.v14i2.3525
+python scripts/openalex.py rujukan 10.33007/ska.v14i2.3525 --gaya apa
 python scripts/openalex.py bib 10.33007/ska.v14i2.3525
 python scripts/openalex.py dikutip 10.33007/ska.v14i2.3525
 ```
@@ -31,7 +33,19 @@ setx OPENALEX_API_KEY "<kunci>"            # Windows; buka terminal baru sesudah
 export OPENALEX_API_KEY="<kunci>"          # macOS/Linux; tambahkan ke ~/.bashrc atau ~/.zshrc
 ```
 
-`cek` keluar dengan kode 0 bila judul (dan DOI, bila diberikan) cocok, dan 1 bila meragukan.
+Karya yang tidak ada di OpenAlex dicari di Crossref, tempat sebagian besar jurnal SINTA ber-DOI
+terdaftar. Galat kuota (HTTP 429) dicoba ulang otomatis.
+
+- `cek` keluar dengan kode 0 bila judul, penulis, dan tahun yang diberikan cocok, dan 1 bila
+  meragukan. Selisih tahun satu dianggap cocok (terbit daring lebih dulu) dan diberi catatan.
+- `daftar` membaca satu entri per baris (nomor `[1]` atau `1.` boleh ada) dan memberi OK, RAGU,
+  atau TIDAK DITEMUKAN per entri, lengkap dengan metadata yang ditemukan. RAGU berarti ada karya
+  yang mirip tetapi judul, penulis pertama, atau tahunnya tidak sesuai: tanda khas rujukan
+  karangan, tetapi juga bisa salah ketik.
+- `rujukan` mencetak entri APA 7 atau IEEE (gaya naskah Indonesia: *dkk.*, *hlm.*). Huruf miring
+  ditandai `*…*`. Bila metadata penulis memuat nama kampus atau deretan inisial, keluar
+  `PERINGATAN: metadata penulis`; sebagian jurnal OJS mengirim afiliasi sebagai nama penulis.
+
 Kueri bahasa Inggris memberi hasil terbanyak; ulangi dengan kueri bahasa Indonesia untuk
 jurnal lokal. Jurnal tanpa DOI sering tidak terindeks; cek di laman OJS jurnalnya atau di
 Garuda (https://garuda.kemdiktisaintek.go.id/).

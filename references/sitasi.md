@@ -16,16 +16,17 @@
 | Kebutuhan | Alat |
 | --- | --- |
 | Sintesis temuan: "apa kata riset tentang X" | Consensus |
-| Metadata, abstrak, BibTeX, cek keberadaan, siapa yang mengutip | OpenAlex: `python scripts/openalex.py` (cari, doi, bib, cek, dikutip) |
+| Metadata, abstrak, entri APA/IEEE/BibTeX, cek keberadaan, siapa yang mengutip | OpenAlex dan Crossref: `python scripts/openalex.py` (cari, doi, rujukan, bib, cek, daftar, dikutip) |
 | Kesehatan dan biomedis | PubMed |
 | Praterbit | arXiv, alphaXiv |
-| Cek DOI | Crossref (`api.crossref.org/works/<DOI>`), `doi.org` |
+| Cek DOI | `openalex.py doi` (otomatis ke Crossref), `doi.org` |
 | Jurnal Indonesia | Garuda (garuda.kemdiktisaintek.go.id), SINTA, laman OJS jurnalnya |
 
 Cara mengecek satu rujukan:
 
-1. Cari judulnya di OpenAlex (`python scripts/openalex.py cek "judul" --doi …`) atau Crossref.
-2. Cocokkan penulis, tahun, dan nama jurnal.
+1. Jalankan `python scripts/openalex.py cek "judul" --penulis "…" --tahun …`. Untuk seluruh
+   daftar pustaka sekaligus: `python scripts/openalex.py daftar pustaka.txt`.
+2. Cocokkan nama jurnal, volume, dan halaman dengan metadata yang dicetak.
 3. Baca abstraknya. Pastikan klaim di naskah memang ada di sumber, bukan hanya topiknya mirip.
 4. Bila tidak ditemukan di mana pun, anggap rujukan itu tidak ada dan beri penanda.
 

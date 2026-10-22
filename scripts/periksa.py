@@ -49,10 +49,15 @@ POLA = [
      "bukan … melainkan …; tidak … tetapi …", 1),
     ("KE-14", "K", r"\b(?:meskipun|walaupun|walau|biarpun|kendatipun)\b[^.;]{1,120}?,\s*(?:tetapi|namun)\b", I,
      "dua konjungsi untuk satu hubungan; buang tetapi/namun", 1),
-    ("KE-15", "K", AWAL + r"(?:Karena|Sebab)\b[^.;]{1,120}?,\s*maka\b", 0, "karena …, [induk kalimat]; buang maka", 1),
+    ("KE-15", "K", AWAL + r"(?:Karena|Sebab|Oleh karena|Berdasarkan|Mengingat)\b[^.;]{1,120}?,\s*maka\b", 0,
+     "anak kalimat di depan sudah menandai hubungan; buang maka", 1),
     ("KE-16", "K", AWAL + r"(?:Sehingga|Sedangkan)\b", 0,
      "konjungsi intrakalimat di awal kalimat; gabungkan atau pakai Akibatnya/Adapun", 1),
     ("KE-17", "K", r"\blebih\s+(?!dari\b)\w+\s+dari\b(?!\s+(?:pada|sekadar)\b)", I, "perbandingan memakai daripada", 1),
+    # Gaya (G): anjuran, tidak membuat kode keluar 1
+    ("NM-01", "G", r"\b(?:melakukan|mengalami|memberikan|mengadakan|melaksanakan)\s+(?:pe\w{3,}an|ke\w{3,}an)\b", I,
+     "nominalisasi; pakai verbanya langsung (mengukur, turun, memengaruhi)", 1),
+    ("KK-01", "G", r"\bmembuktikan\b", I, "cek kekuatan klaim: menunjukkan atau mengindikasikan bila buktinya statistik/korelasi", 1),
     # Ejaan
     ("EJ-01", "K", r"\bdimana(?:-mana)?\b", I, "kata depan ditulis terpisah: di mana", 1),
     ("EJ-02", "K", r"\bdi\s(?:analisis|analisa|uji|lakukan|gunakan|ukur|ambil|peroleh|buat|hitung|kembangkan|rancang|teliti|bahas"
@@ -153,7 +158,28 @@ def periksa(teks):
                 hasil.append((baris(m), i, lab, c, sar(c) if callable(sar) else sar))
     for m in POLA_KB.finditer(t):
         hasil.append((baris(m), "KB-01", "K", m.group(0), "baku: " + KATA_BAKU[m.group(0).lower()]))
+    hasil += kalimat_panjang(teks, t)
     return sorted(hasil)
+
+
+BATAS_BLOK = re.compile(r"\n(?=[ \t]*(?:\n|[-*+>|#]|\d+[.)][ \t]))")
+
+
+def kalimat_panjang(teks, t, maks=35):
+    """KL-01 (G): kalimat lebih dari maks kata. Blok dipisah di baris kosong, butir, judul, dan tabel teks asli."""
+    hasil, awal = [], 0
+    for m in list(BATAS_BLOK.finditer(teks)) + [None]:
+        akhir = m.start() if m else len(t)
+        blok = t[awal:akhir]
+        if "|" not in teks[awal:akhir]:
+            for k in re.finditer(r"[^.!?]+[.!?]?", blok):  # titik desimal dan singkatan memotong: hanya mengurangi temuan
+                kata = re.findall(r"[^\W\d_]+", k.group(0))
+                if len(kata) > maks:
+                    pos = awal + k.start() + len(k.group(0)) - len(k.group(0).lstrip())
+                    hasil.append((t.count("\n", 0, pos) + 1, "KL-01", "G", " ".join(kata[:6]) + " …",
+                                  f"{len(kata)} kata; pecah menjadi dua kalimat atau lebih"))
+        awal = akhir
+    return hasil
 
 
 KUTIPAN = re.compile(r'"[^"\n]{3,}"|“[^”]{3,}”')
@@ -224,6 +250,11 @@ def tes():
         "Ini bukan galat acak, tetapi galat sistematis.": "KE-13",
         "Meskipun mahal, tetapi alat ini awet.": "KE-14",
         "Karena arus berlebih, maka sekring putus.": "KE-15",
+        "Berdasarkan uraian tersebut, maka perlu dilakukan penelitian.": "KE-15",
+        "Kami melakukan pengukuran tegangan.": "NM-01",
+        "Nilai galat mengalami penurunan.": "NM-01",
+        "Hal ini membuktikan bahwa tidur menyebabkan nilai naik.": "KK-01",
+        " ".join(["kata"] * 36) + ".": "KL-01",
         "Galat naik. Sehingga hasil tidak valid.": "KE-16",
         "Metode A lebih baik dari metode B.": "KE-17",
         "Ruang dimana alat diuji.": "EJ-01",
@@ -278,6 +309,9 @@ def tes():
         "Data diolah.\n\n## Daftar Pustaka\n\nSmith, J. (2020). Multi agent systems for inter vehicle use.",
         "DAFTAR PUSTAKA\nGarcia, L. (2019). Ultra wideband sensing. Respon sistem.",
         "Suhu 25 °C dipakai.",
+        " ".join(["kata"] * 35) + ".",
+        "- " + " ".join(["butir"] * 20) + "\n- " + " ".join(["butir"] * 20),
+        "| " + " | ".join(["sel"] * 40) + " |",
     ]
     gagal = 0
     for teks, id_ in salah.items():
@@ -347,9 +381,13 @@ def main(argv):
     ada_k = False
     for nama in argv:
         teks = sys.stdin.read() if nama == "-" else Path(nama).read_text(encoding="utf-8")
-        for baris, id_, lab, cuplikan, saran in periksa(teks):
+        temuan = periksa(teks)
+        for baris, id_, lab, cuplikan, saran in temuan:
             ada_k |= lab == "K"
             print(f"{nama}:{baris}: [{id_} {lab}] {cuplikan!r}: {saran}")
+        if temuan:
+            jumlah = Counter(x[2] for x in temuan)
+            print(f"{nama}: {len(temuan)} temuan (" + ", ".join(f"{l} {jumlah[l]}" for l in ("K", "G", "AI") if jumlah[l]) + ")")
     return 1 if ada_k else 0
 
 

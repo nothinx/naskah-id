@@ -44,7 +44,7 @@ mubazir. Rujukan utama: *Tata Bahasa Baku Bahasa Indonesia* (Alwi dkk., ed. IV, 
 | KE-12 | `baik A ataupun B`, `baik A dan B` | baik A maupun B | K |
 | KE-13 | `bukan A, tetapi B` | bukan A, melainkan B; tidak A, tetapi B | K |
 | KE-14 | `Meskipun mahal, tetapi awet.` | Meskipun mahal, alat ini awet. | K |
-| KE-15 | `Karena hujan, maka panen gagal.` | Karena hujan, panen gagal. | K |
+| KE-15 | `Karena hujan, maka panen gagal.`, `Berdasarkan uraian di atas, maka …` | Karena hujan, panen gagal. Berdasarkan uraian di atas, … | K |
 | | `Jika …, maka …` | "maka" boleh, tetapi biasanya mubazir | G |
 | KE-16 | `Sehingga …` / `Sedangkan …` di awal kalimat | gabungkan dengan kalimat sebelumnya, atau pakai Akibatnya / Adapun | K |
 | KE-17 | `lebih baik dari` | lebih baik daripada | K |
@@ -64,7 +64,7 @@ Koma tetap dipakai sebelum konjungsi pertentangan: "tetapi", "melainkan", "sedan
 
 ## Nominalisasi
 
-Verba penopang ("melakukan", "mengalami", "memberikan") ditambah nomina membuat kalimat
+Kode NM-01 (G). Verba penopang ("melakukan", "mengalami", "memberikan") ditambah nomina membuat kalimat
 panjang tanpa menambah makna. Pakai verbanya langsung.
 
 | Kaku | Ringkas |
@@ -97,6 +97,8 @@ sehari" bisa dipertahankan bila paragraf itu membahas prosedur pengukuran.
 | | `Dengan demikian dapat disimpulkan bahwa` | Jadi, …; Simpulannya, … |
 
 ## Panjang dan kepaduan
+
+Kode KL-01 (G): kalimat lebih dari 35 kata ditandai `periksa.py`.
 
 - Satu kalimat, satu gagasan. Kalimat di atas 35 kata hampir selalu bisa dipecah.
 - Variasikan panjang kalimat. Temuan sering paling kuat dalam kalimat pendek.

@@ -232,10 +232,12 @@ dan menandai klaim yang belum berujukan dengan `[PERLU RUJUKAN: …]`.
 | `references/bagian-naskah.md` | Abstrak, pendahuluan, tinjauan pustaka, metode, hasil, simpulan |
 | `contoh/` | Paragraf sebelum dan sesudah dari teknik, kesehatan, sosial, pendidikan, sejarah |
 | `references/alat-riset.md` | Cara menyambungkan OpenAlex, Consensus, alphaXiv, dan PubMed |
-| `scripts/periksa.py` | Pemeriksa pola berbasis regex, hanya pustaka standar Python |
-| `scripts/openalex.py` | Cari, cek, dan kutip karya lewat OpenAlex, hanya pustaka standar Python |
+| `scripts/periksa.py` | Pemeriksa pola berbasis regex dan pembanding fakta asli/hasil, hanya pustaka standar Python |
+| `scripts/openalex.py` | Cari, cek, dan kutip karya lewat OpenAlex dan Crossref, hanya pustaka standar Python |
 | `.mcp.json` | Server MCP Consensus dan alphaXiv untuk plugin Claude Code |
-| `evals/cases.json` | Kasus uji perilaku agen beserta kriteria lulus |
+| `evals/cases.json` | Kasus uji perilaku agen beserta kriteria lulus dan cek otomatis |
+| `evals/jalankan.py` | Runner eval: menjalankan agen, mengecek otomatis, dan memanggil model penilai |
+| `CHANGELOG.md` | Riwayat versi |
 
 ## Pemeriksa cepat
 
@@ -252,12 +254,56 @@ Contoh keluaran:
 ```
 naskah.md:4: [KE-01 K] 'Dari hasil pengujian menunjukkan': subjek hilang karena kata depan; ...
 naskah.md:9: [KB-01 K] 'analisa': baku: analisis
+naskah.md:12: [NM-01 G] 'mengalami penurunan': nominalisasi; pakai verbanya langsung ...
+naskah.md: 3 temuan (K 2, G 1)
+```
+
+Label K (kaidah) membuat kode keluar 1. Label G (gaya) dan AI (klise mesin) hanya anjuran.
+Bagian Daftar Pustaka, Referensi, dan Abstract dilewati.
+
+`--banding` membandingkan teks asli dengan hasil suntingan:
+
+```
+[SITASI] hilang: (Santoso, 2020)
+[ANGKA] hilang: 1,2%
+[ANGKA] baru: 1,3%
+[PEMISAH] 0.5 -> 0,5 (cek: koreksi desimal atau nilai berubah?)
 ```
 
 Pemeriksa ini sengaja sederhana. Pada [uji abstrak nyata](contoh/korpus/uji-abstrak-pendidikan.md),
 ia menemukan 4 masalah dan melewatkan 6 lainnya yang baru tertangkap saat dibaca. Pada README
 versi sebelumnya, ia tidak menemukan apa pun, padahal ada lima kesalahan isi. Pakai pemeriksa
 sebagai penyaring awal, lalu baca setiap temuan dalam konteksnya.
+
+## Cek daftar pustaka
+
+```bash
+python scripts/openalex.py daftar pustaka.txt
+```
+
+```
+[3] RAGU: Santoso, B., & Wibowo, A. (2019). Pengaruh media sosial terhadap prestasi belajar…
+    -> Mukhtar, A., & MD, L. (2020). PENGARUH KOMPETENSI GURU TERHADAP KINERJA GURU …
+    judul tidak cocok (cakupan 0.67); penulis pertama Afiah Mukhtar tidak disebut
+[5] RAGU: Hinton, G. (2018). Deep residual learning for image recognition. Nature, 12(3), 1-9.
+    -> He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep Residual Learning for Image Recognition …
+    penulis pertama Kaiming He tidak disebut; tahun 2016 tidak disebut
+```
+
+RAGU dan TIDAK DITEMUKAN bukan bukti rujukan palsu: jurnal tanpa DOI sering tidak terindeks.
+Perintah lain (`cek`, `rujukan`, `doi`, `bib`, `dikutip`) ada di
+[references/alat-riset.md](references/alat-riset.md).
+
+## Menguji skill
+
+```bash
+python evals/jalankan.py --agen "claude -p" --hasil evals/hasil/dengan-skill --penilai "claude -p"
+```
+
+`--agen` dan `--penilai` menerima perintah apa pun yang membaca prompt dari stdin, jadi agen lain
+juga bisa diuji. Untuk melihat manfaat skill, jalankan sekali tanpa skill ke folder lain lalu
+bandingkan skornya. Cek otomatis (angka bertahan, pola wajib dan terlarang) berjalan tanpa
+penilai; kriteria lainnya butuh penilai atau dibaca manusia.
 
 ## Pernyataan penggunaan AI
 
@@ -281,10 +327,13 @@ Templat untuk Elsevier, IEEE, dan Springer Nature ada di [KONTRAK.md](KONTRAK.md
 - Kebijakan AI dari COPE, Elsevier, IEEE, Springer Nature, Universitas Indonesia, UGM, dan
   Ditjen Diktiristek. Rincian di [KONTRAK.md](KONTRAK.md).
 
-Struktur repo terinspirasi dari [blader/humanizer](https://github.com/blader/humanizer),
-[hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop),
-[conorbronsdon/avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing), dan
-[AIScientists-Dev/academic-humanizer](https://github.com/AIScientists-Dev/academic-humanizer).
+Struktur repo terinspirasi dari:
+
+- [blader/humanizer](https://github.com/blader/humanizer)
+- [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop)
+- [conorbronsdon/avoid-ai-writing](https://github.com/conorbronsdon/avoid-ai-writing)
+- [AIScientists-Dev/academic-humanizer](https://github.com/AIScientists-Dev/academic-humanizer)
+
 Teks repo ini ditulis sendiri untuk bahasa Indonesia, kecuali kutipan berlisensi CC BY-SA di
 `contoh/korpus/` yang atribusinya dicantumkan per kutipan.
 
@@ -297,7 +346,8 @@ Laporan paling berguna ada dua jenis:
 - **Salah positif.** Kalimat benar yang ditandai `periksa.py` atau dikoreksi agen. Sertakan
   kalimatnya dan alasan kenapa itu benar.
 
-Sebelum mengirim perubahan, jalankan `python scripts/periksa.py --tes` dan periksa berkas
+Sebelum mengirim perubahan, jalankan `python scripts/periksa.py --tes`,
+`python scripts/openalex.py --tes`, dan `python evals/jalankan.py --tes`, lalu periksa berkas
 Markdown repo dengan `periksa.py`. Repo ini tidak boleh melanggar katalognya sendiri.
 
 ## Lisensi
@@ -312,4 +362,6 @@ articles, theses, grant proposals) in natural, standard Indonesian (EYD V, KBBI)
 changes numbers, results, or citations, never invents references, and is not a tool for
 evading AI detectors. Install with `npx skills add nothinx/naskah-id` for Claude Code, Codex,
 Cursor, Gemini CLI, GitHub Copilot, Windsurf, OpenCode, and other Agent Skills hosts. It ships
-an OpenAlex CLI for reference checks and MCP setup for Consensus and alphaXiv. MIT licensed.
+a regex checker with a before/after fact diff (numbers, citations, quotes) and an
+OpenAlex/Crossref CLI that verifies whole bibliographies and prints APA/IEEE entries. An eval
+runner and MCP setup for Consensus and alphaXiv are included. MIT licensed.
