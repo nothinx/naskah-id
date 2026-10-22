@@ -21,6 +21,11 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/). Ve
 - Opsi `periksa.py --abaikan KODE,…`.
 - Tiga kasus eval baru (istilah dan singkatan); total 20.
 
+### Diperbaiki
+
+- Nama lembaga di `references/singkatan.md` diverifikasi: SKI 2023 menggabungkan Riskesdas dan
+  SSGI; bentuk Kemdiktisaintek dan Kemendiktisaintek sama-sama dipakai.
+
 ## 1.0.0 (22 Oktober 2026)
 
 ### Ditambahkan

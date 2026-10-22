@@ -179,6 +179,7 @@ AKRONIM = {
     "BAPPENAS": "Bappenas", "BAPPEDA": "Bappeda", "BULOG": "Bulog", "POLRI": "Polri", "DISHUB": "Dishub",
     "DINKES": "Dinkes", "DISDIK": "Disdik", "KEMENHUB": "Kemenhub", "KEMENKES": "Kemenkes", "KEMENKEU": "Kemenkeu",
     "KEMENDIKBUD": "Kemendikbud", "KEMENDIKBUDRISTEK": "Kemendikbudristek", "KEMDIKTISAINTEK": "Kemdiktisaintek",
+    "KEMENDIKTISAINTEK": "Kemendiktisaintek",
     "KEMENDIKDASMEN": "Kemendikdasmen", "BUMDES": "BUMDes", "PERPRES": "Perpres", "PERMEN": "Permen", "PERDA": "Perda",
     "PUSKESMAS": "puskesmas (Puskesmas bila nama)", "POSYANDU": "posyandu (Posyandu bila nama)",
     "IPTEK": "iptek", "PEMILU": "pemilu", "BALITA": "balita", "AMDAL": "amdal", "TILANG": "tilang", "RUDAL": "rudal",

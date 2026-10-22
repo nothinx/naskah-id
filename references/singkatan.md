@@ -54,16 +54,17 @@ Jangan mengisinya dari dugaan.
 
 Tulis nama lembaga yang berlaku pada waktu yang dirujuk. Data 2019 dari Kemendikbud tetap
 ditulis Kemendikbud. Jangan "memperbarui" nama lembaga di naskah pengguna; tanyakan bila
-ragu. Perubahan yang sering muncul di naskah (per Oktober 2026; cek situs resmi lembaga):
+ragu. Perubahan yang sering muncul di naskah (diverifikasi lewat pemberitaan dan situs resmi
+lembaga, Oktober 2026; cek ulang sebelum dikutip):
 
 | Dulu | Sekarang |
 | --- | --- |
 | LIPI, BATAN, LAPAN, BPPT | dilebur ke BRIN (2021) |
 | Kemenristekdikti (2014–2019) | Kemendikbud dan Kemenristek/BRIN (2019), lalu Kemendikbudristek (2021) |
-| Kemendikbudristek (2021–2024) | Kemendikdasmen; Kemdiktisaintek; Kementerian Kebudayaan (Oktober 2024) |
+| Kemendikbudristek (2021–2024) | Kemendikdasmen; Kemdiktisaintek (media juga menulis Kemendiktisaintek); Kementerian Kebudayaan (Oktober 2024) |
 | Kemenkop UKM | Kementerian Koperasi; Kementerian UMKM (Oktober 2024) |
 | Kementerian PUPR | Kementerian PU; Kementerian PKP (Oktober 2024) |
-| Riskesdas (2007–2018) | Survei Kesehatan Indonesia (SKI) 2023 |
+| Riskesdas (2007–2018) dan SSGI (2019–2022) | digabung menjadi Survei Kesehatan Indonesia (SKI) 2023 |
 | PUEBI (2015) | EYD V (2022) |
 
 ## Singkatan yang sering muncul
