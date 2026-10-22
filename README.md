@@ -147,6 +147,20 @@ memperbarui, jalankan `git pull` di folder itu.
 2. Di Claude.ai, buka pengaturan, bagian skill, lalu unggah ZIP itu sebagai skill kustom.
    Bila diminta, aktifkan dulu fitur eksekusi kode.
 
+### Aplikasi Gemini (Gems)
+
+Aplikasi chat Gemini, baik versi web maupun desktop, tidak membaca folder skill yang dipasang
+lewat `npx skills`. Folder itu hanya dibaca Gemini CLI. Untuk memakai skill ini di aplikasi chat,
+buat Gem:
+
+1. Di aplikasi Gemini, buka **Gems**, lalu buat Gem baru, misalnya dengan nama `naskah-id`.
+2. Salin seluruh isi `SKILL.md` ke kolom instruksi.
+3. Unggah berkas di folder `references/` sebagai pengetahuan Gem.
+
+Di Gem, skill hanya bekerja sebagai aturan bahasa dan rujukan. `scripts/periksa.py`,
+`scripts/openalex.py`, dan server MCP tidak bisa dijalankan, jadi pemeriksaan otomatis dan
+pencarian rujukan tidak tersedia.
+
 ### Alat riset (opsional)
 
 Untuk mencari dan mengecek rujukan, skill memakai alat berikut:
