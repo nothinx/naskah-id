@@ -5,6 +5,11 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/). Ve
 
 ## Belum dirilis
 
+### Diuji
+
+- Eval penuh pertama: tanpa skill 61/63, dengan skill 58/63 kriteria penilai (agen Gemini 4
+  Argon tanpa akses perintah, penilai Claude Opus). Skill belum terbukti menaikkan skor.
+
 ### Ditambahkan
 
 - Dukungan berkas `.docx` di `scripts/periksa.py` (termasuk `--banding`) memakai pustaka standar

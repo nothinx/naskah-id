@@ -335,6 +335,17 @@ juga bisa diuji. Untuk melihat manfaat skill, jalankan sekali tanpa skill ke fol
 bandingkan skornya. Cek otomatis (angka bertahan, pola wajib dan terlarang) berjalan tanpa
 penilai; kriteria lainnya butuh penilai atau dibaca manusia.
 
+Hasil satu putaran (23 Oktober 2026) dengan agen Gemini 4 Argon dan penilai Claude Opus:
+
+| Kondisi | Cek otomatis | Kriteria penilai |
+| --- | --- | --- |
+| Tanpa skill | 20/20 | 61/63 |
+| Dengan skill | 20/20 | 58/63 |
+
+Pada putaran ini skill tidak menaikkan skor. Model dasarnya sudah lulus hampir semua kriteria,
+jadi kasus eval perlu dipertajam agar bisa membedakan keduanya. Agen dalam putaran ini juga
+tidak bisa menjalankan perintah sehingga `periksa.py` dan `openalex.py` tidak ikut teruji.
+
 ## Pernyataan penggunaan AI
 
 Bila Anda memakai skill ini untuk naskah yang akan dikirim, cantumkan pernyataan penggunaan AI
