@@ -3,6 +3,24 @@
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/). Versi mengikuti
 [Semantic Versioning](https://semver.org/lang/id/).
 
+## 1.1.0 (22 Oktober 2026)
+
+### Ditambahkan
+
+- `openalex.py istilah`: mengukur keterpakaian bentuk istilah (padanan, serapan, asing) di karya
+  berbahasa Indonesia per bidang, lalu memberi putusan dominan, bersaing, atau data kurang,
+  dibedakan untuk teks baru dan suntingan.
+- `references/istilah.md`: urutan pertimbangan istilah asing dan hasil pengukuran 26 pasang
+  istilah dari teknik, informatika, kesehatan, sosial, dan manajemen.
+- `references/singkatan.md`: kaidah EYD V untuk singkatan dan akronim, singkatan yang sering
+  muncul per bidang, singkatan bermakna ganda, dan nama lembaga yang berubah.
+- Pola singkatan di `periksa.py`: SG-01 tanda hubung imbuhan (`di-PHK`), SG-02 titik singkatan
+  umum (`dll.`, `s.d.`), SG-05 huruf kapital akronim (`Bappenas`, `iptek`) sebagai K; SG-03
+  jamak berulang, SG-04 singkatan belum dijelaskan, SG-06 kepanjangan bukan nama diri berhuruf
+  kapital sebagai G.
+- Opsi `periksa.py --abaikan KODE,…`.
+- Tiga kasus eval baru (istilah dan singkatan); total 20.
+
 ## 1.0.0 (22 Oktober 2026)
 
 ### Ditambahkan

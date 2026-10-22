@@ -7,6 +7,8 @@
   python scripts/openalex.py cek "Judul persis" [--doi 10.x] [--penulis "Santoso, Dewi"] [--tahun 2021]
   python scripts/openalex.py daftar pustaka.txt                        # cek seluruh daftar pustaka, satu entri per baris
   python scripts/openalex.py dikutip W2741809807 [--n 10]              # karya yang mengutip
+  python scripts/openalex.py istilah "catu daya" "power supply" [--bidang teknik] [--tahun 2019-2026]
+                                                                       # istilah mana yang hidup di karya berbahasa Indonesia
   python scripts/openalex.py --tes
 
 Karya yang tidak ada di OpenAlex dicari di Crossref; jurnal SINTA ber-DOI umumnya terdaftar di sana.
@@ -272,6 +274,45 @@ def ieee(k):
 
 GAYA = {"apa": apa, "ieee": ieee, "bib": bibtex}
 
+# --- keterpakaian istilah ---
+
+BIDANG = {  # nama bidang -> id field OpenAlex
+    "teknik": 22, "elektro": 22, "mesin": 22, "sipil": 22, "informatika": 17, "komputer": 17, "kedokteran": 27,
+    "kesehatan": 27, "keperawatan": 29, "farmasi": 30, "kedokteran-gigi": 35, "profesi-kesehatan": 36, "sosial": 33,
+    "pendidikan": 33, "hukum": 33, "ekonomi": 20, "manajemen": 14, "bisnis": 14, "akuntansi": 14, "psikologi": 32,
+    "pertanian": 11, "biologi": 11, "lingkungan": 23, "kimia": 16, "teknik-kimia": 15, "fisika": 31,
+    "matematika": 26, "statistik": 26, "energi": 21, "material": 25, "humaniora": 12, "sejarah": 12,
+    "kebumian": 19, "veteriner": 34, "biokimia": 13, "mikrobiologi": 24, "keputusan": 18, "neurosains": 28,
+}
+MIN_DATA = 20
+
+
+def putusan(hitung):
+    """hitung: {istilah: (n_judul, n_judul_abstrak)}. Kembalikan (dasar, {istilah: pangsa}, kalimat putusan)."""
+    for i, dasar in ((0, "judul"), (1, "judul+abstrak")):
+        total = sum(h[i] for h in hitung.values())
+        if total >= MIN_DATA:
+            pangsa = {t: h[i] / total for t, h in hitung.items()}
+            break
+    else:
+        return None, {}, (f"Data kurang (< {MIN_DATA} karya). Ikuti gaya selingkung atau pilihan penulis; "
+                          "jangan mengganti istilah berdasarkan data ini.")
+    utama = max(pangsa, key=pangsa.get)
+    catatan = " Abstrak sering berbahasa Inggris, jadi bentuk Inggris terhitung lebih." if dasar != "judul" else ""
+    if pangsa[utama] >= 0.6:
+        i = 0 if dasar == "judul" else 1
+        mati = [t for t, v in pangsa.items() if v < 0.05 and hitung[t][i] < 10]
+        jarang = [t for t, v in pangsa.items() if v < 0.25 and t not in mati]
+        kal = f"\"{utama}\" dominan ({pangsa[utama]:.0%} {dasar}). Untuk teks baru, pakai bentuk ini."
+        if jarang:
+            kal += f" {', '.join(jarang)} jarang tetapi masih dipakai: pada suntingan, pertahankan pilihan penulis."
+        if mati:
+            kal += f" {', '.join(mati)} hampir tidak dipakai: pada suntingan, sarankan bentuk dominan (jangan langsung ganti)."
+    else:
+        kal = (f"Bersaing: tidak ada bentuk yang mencapai 60% ({dasar}). Keduanya hidup; pertahankan pilihan penulis "
+               "dan sebut bentuk lain dalam kurung pada kemunculan pertama.")
+    return dasar, pangsa, kal + catatan
+
 
 # --- perintah ---
 
@@ -369,6 +410,27 @@ def main(a):
         print(f"\n{len(entri)} entri: " + ", ".join(f"{v} {s}" for s, v in hitung.items() if v))
         print("RAGU dan TIDAK DITEMUKAN bukan bukti rujukan palsu: jurnal tanpa DOI sering tidak terindeks. Cek di laman jurnal atau Garuda.")
         return 0 if hitung["OK"] == len(entri) else 1
+    if cmd == "istilah":
+        bidang, tahun = opt("--bidang"), opt("--tahun", "2019-2026")
+        if len(a) < 2 or (bidang and not bidang.isdigit() and bidang not in BIDANG):
+            print("pemakaian: istilah \"bentuk 1\" \"bentuk 2\" ... [--bidang " + "|".join(sorted(set(BIDANG))) + "] [--tahun 2019-2026]")
+            return 2
+        dasar_f = f"language:id,publication_year:{tahun}"
+        if bidang:
+            dasar_f += f",primary_topic.field.id:{bidang if bidang.isdigit() else BIDANG[bidang]}"
+        hitung = {}
+        for t in a:
+            frasa = '"' + t.replace('"', "") + '"'
+            hitung[t] = tuple(get(f"{API}/works", filter=f"{dasar_f},{kol}.search:{frasa}", per_page=1, select="id")["meta"]["count"]
+                              for kol in ("title", "title_and_abstract"))
+        dasar, pangsa, kal = putusan(hitung)
+        print(f"Karya berbahasa Indonesia di OpenAlex, {tahun}" + (f", bidang {bidang}" if bidang else "") + ":")
+        print(f"  {'istilah':28} {'judul':>7} {'judul+abstrak':>14} {'pangsa':>7}")
+        for t, (nj, na) in hitung.items():
+            print(f"  {t:28} {nj:>7} {na:>14} {pangsa.get(t, 0):>7.0%}")
+        print("Putusan: " + kal)
+        print("Gaya selingkung jurnal sasaran tetap didahulukan. Kriteria lain: references/istilah.md.")
+        return 0
     if cmd == "dikutip":
         if not a:
             print("pemakaian: dikutip <DOI|id>"); return 2
@@ -424,6 +486,15 @@ def tes():
     assert not penulis_rusak(oa) and not penulis_rusak(cr)
     assert penulis_rusak(dict(cr, penulis=["P. P. S. P. S. S. P. U. A. P. Indonesia"]))
     assert penulis_rusak(dict(cr, penulis=["Jurusan Gizi Fakultas Kesehatan"]))
+    # istilah: ambang 60%, data kurang, cadangan judul+abstrak
+    assert putusan({"catu daya": (84, 397), "power supply": (54, 516)})[2].startswith('"catu daya" dominan (61% judul)')
+    d, pg, kal = putusan({"stunting": (8027, 10185), "tengkes": (6, 17)})
+    assert d == "judul" and kal.startswith('"stunting" dominan') and "tengkes hampir tidak dipakai" in kal, kal
+    assert "pembelajaran mesin jarang tetapi masih dipakai" in putusan({"pembelajaran mesin": (49, 399), "machine learning": (561, 1834)})[2]
+    assert putusan({"filter kalman": (15, 25), "tapis kalman": (4, 4), "penapis kalman": (0, 0)})[2].startswith('"filter kalman" dominan')
+    assert putusan({"a": (50, 0), "b": (45, 0)})[2].startswith("Bersaing")
+    assert putusan({"a": (3, 30), "b": (2, 10)})[0] == "judul+abstrak"
+    assert putusan({"a": (1, 2), "b": (0, 3)})[0] is None
     assert norm("Analisis Ćevapi—Uji") == "analisis cevapi uji"
     print("ok")
 

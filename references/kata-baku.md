@@ -56,7 +56,8 @@ Pengecualian: fonem tidak luluh bila kata dasarnya diawali gugus konsonan, misal
 ## Istilah bidang
 
 Untuk istilah teknis, rujuk KBBI, Tesaurus Tematis (https://tesaurus.kemendikdasmen.go.id/tematis/),
-dan konvensi jurnal bidang itu. Glosarium Padanan Istilah Badan Bahasa tidak dapat diakses per
+dan konvensi jurnal bidang itu. Parameter menimbang padanan dan alat ukur keterpakaiannya ada
+di `references/istilah.md`. Glosarium Padanan Istilah Badan Bahasa tidak dapat diakses per
 Oktober 2026. Istilah yang sudah lazim di jurnal bidangnya dipertahankan
 walaupun ada padanan resmi: *filter Kalman* lebih dikenal daripada *penapis Kalman* di jurnal
 teknik. Pilih satu bentuk lalu pakai konsisten.

@@ -21,6 +21,7 @@ python scripts/openalex.py doi 10.33007/ska.v14i2.3525
 python scripts/openalex.py rujukan 10.33007/ska.v14i2.3525 --gaya apa
 python scripts/openalex.py bib 10.33007/ska.v14i2.3525
 python scripts/openalex.py dikutip 10.33007/ska.v14i2.3525
+python scripts/openalex.py istilah "catu daya" "power supply" --bidang teknik
 ```
 
 Jalankan dari folder skill (misalnya `.agents/skills/naskah-id` atau `.claude/skills/naskah-id`).
@@ -45,6 +46,10 @@ terdaftar. Galat kuota (HTTP 429) dicoba ulang otomatis.
 - `rujukan` mencetak entri APA 7 atau IEEE (gaya naskah Indonesia: *dkk.*, *hlm.*). Huruf miring
   ditandai `*…*`. Bila metadata penulis memuat nama kampus atau deretan inisial, keluar
   `PERINGATAN: metadata penulis`; sebagian jurnal OJS mengirim afiliasi sebagai nama penulis.
+
+- `istilah` menghitung karya berbahasa Indonesia yang memakai tiap bentuk istilah di judul dan
+  abstraknya, lalu memberi putusan dominan, bersaing, atau data kurang. Parameter dan batasnya
+  ada di `references/istilah.md`.
 
 Kueri bahasa Inggris memberi hasil terbanyak; ulangi dengan kueri bahasa Indonesia untuk
 jurnal lokal. Jurnal tanpa DOI sering tidak terindeks; cek di laman OJS jurnalnya atau di

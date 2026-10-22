@@ -86,6 +86,8 @@ Perbaiki sesuai batas pekerjaan. Rujukan per masalah:
 | Subjek hilang, pleonasme, nominalisasi, perangkai | `references/kalimat-efektif.md` |
 | Ejaan, kata depan, gabungan kata, angka, satuan, tanda baca | `references/ejaan-eyd-v.md` |
 | Kata tidak baku | `references/kata-baku.md` |
+| Istilah asing: diterjemahkan, diserap, atau dipertahankan | `references/istilah.md` |
+| Singkatan, akronim, nama lembaga | `references/singkatan.md` |
 | Rujukan dan cara menyitir | `references/sitasi.md` |
 | Menyambungkan alat pencarian rujukan | `references/alat-riset.md` |
 | Abstrak, pendahuluan, tinjauan pustaka, metode, hasil, simpulan | `references/bagian-naskah.md` |
@@ -183,8 +185,14 @@ Urutan dari yang paling sering dan paling mudah dikenali. Daftar lengkap di
 - Verba langsung, bukan "melakukan + nomina": *mengukur*, bukan `melakukan pengukuran`.
 - Verba pelapor yang tepat saat menyitir: *mengukur, menemukan, mengusulkan, membantah,
   memperluas*, bukan *mengatakan* untuk semua sumber.
-- Istilah asing: padanan yang sudah hidup lebih dulu, lalu serapan, lalu istilah asing
-  bercetak miring. Jangan memaksakan padanan yang asing bagi pembaca bidang itu.
+- Istilah asing: jangan menebak apakah padanannya lazim. Ukur dengan
+  `python scripts/openalex.py istilah "padanan" "asing" --bidang …`, dahulukan gaya selingkung,
+  dan jangan mengganti pilihan penulis kecuali bentuknya hampir tidak dipakai
+  (`references/istilah.md`). Contoh: *mikrokontroler* dan *panel surya* menang jauh, tetapi
+  *deep learning* dan *stakeholder* lebih hidup daripada padanannya.
+- Singkatan dijelaskan pada kemunculan pertama: usaha mikro, kecil, dan menengah (UMKM).
+  Kepanjangan yang tidak ada di naskah dan tidak pasti ditulis `[PERLU DATA: kepanjangan …]`,
+  karena banyak singkatan bermakna ganda (`references/singkatan.md`).
 
 ## Jangan dikoreksi berlebihan
 

@@ -135,8 +135,10 @@
       "id": "istilah-bidang",
       "prompt": "Sunting: Penapis Kalman digunakan untuk meredam derau. Penapis Kalman mengestimasi keadaan sistem.",
       "kriteria": [
-        "Agen menyarankan istilah yang lazim di jurnal sasaran (misalnya 'filter Kalman') atau menanyakan konvensi jurnal, tanpa memaksakan padanan.",
-        "Istilah yang dipilih konsisten di seluruh paragraf."
+        "Agen tidak memaksakan 'penapis' hanya karena itu padanan resmi; ia mengukur keterpakaian (openalex.py istilah) atau menanyakan konvensi jurnal sasaran.",
+        "Bila agen mengganti atau menyarankan 'filter Kalman', alasannya disebut (data keterpakaian atau gaya selingkung), bukan selera.",
+        "Istilah yang dipilih konsisten di seluruh paragraf.",
+        "Urutan D-M dipertahankan: 'filter Kalman', bukan 'Kalman filter' tanpa cetak miring."
       ]
     },
     {
@@ -204,6 +206,44 @@
       "kriteria": [
         "Agen tidak menerapkan kaidah EYD atau KBBI pada teks berbahasa Inggris.",
         "Agen menyebut bahwa skill ini untuk naskah berbahasa Indonesia, lalu tetap boleh membantu sebagai penyunting umum."
+      ]
+    },
+    {
+      "id": "istilah-jangan-diganti",
+      "prompt": "Rapikan bahasanya: Model pembelajaran mesin dilatih dengan basis data citra daun. Pembelajaran mesin ini mencapai akurasi 91,3%.",
+      "bahan": "Model pembelajaran mesin dilatih dengan basis data citra daun. Pembelajaran mesin ini mencapai akurasi 91,3%.",
+      "harus_ada": [
+        "pembelajaran mesin"
+      ],
+      "kriteria": [
+        "'pembelajaran mesin' dan 'basis data' tidak diganti menjadi istilah Inggris, karena keduanya masih dipakai di literatur Indonesia dan pengguna hanya meminta perapian.",
+        "Angka 91,3% tidak berubah.",
+        "Bila agen menyebut bentuk Inggris yang lebih umum, itu hanya saran di catatan."
+      ]
+    },
+    {
+      "id": "singkatan-kemunculan-pertama",
+      "prompt": "Sunting paragraf ini: UMKM di Kota Contoh menyerap 64% tenaga kerja. Namun Usaha Mikro, Kecil, dan Menengah (UMKM) kesulitan mengakses KUR. Banyak UMKM-UMKM belum memiliki NIB.",
+      "bahan": "UMKM di Kota Contoh menyerap 64% tenaga kerja. Namun Usaha Mikro, Kecil, dan Menengah (UMKM) kesulitan mengakses KUR. Banyak UMKM-UMKM belum memiliki NIB.",
+      "tidak_boleh_ada": [
+        "UMKM-UMKM",
+        "Usaha Mikro, Kecil, dan Menengah \\(UMKM\\)"
+      ],
+      "kriteria": [
+        "Kepanjangan UMKM dipindah ke kemunculan pertama dan ditulis huruf kecil: usaha mikro, kecil, dan menengah (UMKM).",
+        "'UMKM-UMKM' diperbaiki (banyak UMKM).",
+        "KUR dan NIB dijelaskan, atau ditandai [PERLU DATA: kepanjangan …] bila agen tidak pasti; agen tidak mengarang kepanjangan.",
+        "Angka 64% tidak berubah."
+      ]
+    },
+    {
+      "id": "singkatan-ambigu",
+      "prompt": "Tulis ulang supaya lebih jelas: Hasil PKB menunjukkan 37 kendaraan tidak lulus uji emisi di UPT setempat.",
+      "bahan": "Hasil PKB menunjukkan 37 kendaraan tidak lulus uji emisi di UPT setempat.",
+      "kriteria": [
+        "Agen tidak menebak kepanjangan PKB dan UPT tanpa dasar; ia memakai konteks (uji emisi kendaraan: pengujian kendaraan bermotor) dengan menyebut asumsinya, atau menanyakan/menandai [PERLU DATA: …].",
+        "Angka 37 tidak berubah.",
+        "Tidak ada fakta baru tentang lokasi atau lembaga yang ditambahkan."
       ]
     }
   ]

@@ -13,4 +13,4 @@ jobs:
       - run: python evals/jalankan.py --tes
       - run: python scripts/periksa.py --validasi
       - run: python -c "import json; [json.load(open(f, encoding='utf-8')) for f in ['evals/cases.json', '.claude-plugin/plugin.json', '.claude-plugin/marketplace.json', '.mcp.json']]"
-      - run: python scripts/periksa.py *.md references/*.md contoh/*.md contoh/korpus/*.md
+      - run: python scripts/periksa.py --abaikan SG-04 *.md references/*.md contoh/*.md contoh/korpus/*.md

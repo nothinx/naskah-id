@@ -228,6 +228,8 @@ dan menandai klaim yang belum berujukan dengan `[PERLU RUJUKAN: …]`.
 | `references/kalimat-efektif.md` | Subjek hilang, perangkai, nominalisasi, pleonasme |
 | `references/ejaan-eyd-v.md` | Kata depan, gabungan kata, angka, satuan, tanda koma, huruf miring |
 | `references/kata-baku.md` | Kata tidak baku yang sering muncul di naskah |
+| `references/istilah.md` | Parameter menimbang padanan istilah asing dan data keterpakaiannya |
+| `references/singkatan.md` | Kaidah singkatan dan akronim, daftar singkatan, nama lembaga yang berubah |
 | `references/sitasi.md` | Kejujuran rujukan, cara mengecek, gaya sitasi |
 | `references/bagian-naskah.md` | Abstrak, pendahuluan, tinjauan pustaka, metode, hasil, simpulan |
 | `contoh/` | Paragraf sebelum dan sesudah dari teknik, kesehatan, sosial, pendidikan, sejarah |
@@ -291,6 +293,28 @@ python scripts/openalex.py daftar pustaka.txt
 ```
 
 RAGU dan TIDAK DITEMUKAN bukan bukti rujukan palsu: jurnal tanpa DOI sering tidak terindeks.
+
+## Menimbang istilah asing
+
+Padanan resmi tidak selalu dipakai pembaca bidangnya. Skill ini mengukurnya:
+
+```bash
+python scripts/openalex.py istilah "pembelajaran mesin" "machine learning" --bidang informatika
+```
+
+```
+  istilah                        judul  judul+abstrak  pangsa
+  pembelajaran mesin                49            399      8%
+  machine learning                 561           1834     92%
+Putusan: "machine learning" dominan (92% judul). Untuk teks baru, pakai bentuk ini.
+pembelajaran mesin jarang tetapi masih dipakai: pada suntingan, pertahankan pilihan penulis.
+```
+
+Urutan pertimbangan lengkap (gaya selingkung, keterpakaian, ketepatan makna, pembaca,
+konsistensi) dan hasil pengukuran 26 pasang istilah ada di
+[references/istilah.md](references/istilah.md). Kaidah singkatan dan akronim, daftar singkatan
+yang sering muncul, serta nama lembaga yang berubah ada di
+[references/singkatan.md](references/singkatan.md).
 Perintah lain (`cek`, `rujukan`, `doi`, `bib`, `dikutip`) ada di
 [references/alat-riset.md](references/alat-riset.md).
 

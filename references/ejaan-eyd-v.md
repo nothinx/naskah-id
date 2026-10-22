@@ -79,6 +79,9 @@ Sumber: https://ejaan.kemendikdasmen.go.id/eyd/penggunaan-tanda-baca/tanda-koma/
   lagi, pakai padanannya: dimasukkan.
 - Nama ilmiah makhluk hidup dicetak miring: *Oryza sativa*, *Mycobacterium tuberculosis*.
 
+Singkatan dan akronim (titik, huruf kapital, tanda hubung dengan imbuhan) ada di
+`references/singkatan.md`.
+
 ## Huruf kapital
 
 - Judul karya, bab, dan subbab: huruf awal setiap kata kapital kecuali kata tugas (di, ke,

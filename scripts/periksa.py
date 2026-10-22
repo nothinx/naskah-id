@@ -10,6 +10,7 @@ Pemakaian:
     python scripts/periksa.py --banding asli.md hasil.md # angka, sitasi, kutipan yang berubah
     python scripts/periksa.py --tes                      # uji mandiri
     python scripts/periksa.py --validasi                 # cek SKILL.md dan rujukannya
+    python scripts/periksa.py --abaikan SG-04,KL-01 naskah.md  # lewati kode tertentu
 
 Teks yang dilewati: blok kode, `kode sebaris`, ~~coret~~, URL, dan wilayah antara
 <!-- periksa:abaikan --> dan <!-- periksa:lanjut -->, serta baris yang diawali
@@ -58,6 +59,13 @@ POLA = [
     ("NM-01", "G", r"\b(?:melakukan|mengalami|memberikan|mengadakan|melaksanakan)\s+(?:pe\w{3,}an|ke\w{3,}an)\b", I,
      "nominalisasi; pakai verbanya langsung (mengukur, turun, memengaruhi)", 1),
     ("KK-01", "G", r"\bmembuktikan\b", I, "cek kekuatan klaim: menunjukkan atau mengindikasikan bila buktinya statistik/korelasi", 1),
+    # Singkatan (references/singkatan.md)
+    ("SG-01", "K", r"\b(?:di|ber|se|ke|ter|me[mn]?g?|pe[rn]?)[A-Z]{2,}\b|\b[A-Z]{2,}(?:nya|kan|an|lah|ku|mu)\b", 0,
+     lambda c: "imbuhan dan singkatan dirangkai tanda hubung: "
+     + re.sub(r"^([a-z]+)(?=[A-Z])|(?<=[A-Z])(?=[a-z]+$)", lambda m: (m.group(1) + "-") if m.group(1) else "-", c), 1),
+    ("SG-02", "K", r"\b(?:dll|dsb|dst|dkk|hlm|tsb|yth)\b(?!\.)|(?<![\w/])(?:s/d|a/n|d/a|u/p)(?![\w/])", 0,
+     lambda c: "singkatan umum: " + ({"s/d": "s.d.", "a/n": "a.n.", "d/a": "d.a.", "u/p": "u.p."}.get(c) or c + "."), 1),
+    ("SG-03", "G", r"\b([A-Z][A-Za-z]*[A-Z])-\1\b", 0, "jamak singkatan tidak diulang: banyak UMKM, para pelaku UMKM", 1),
     # Ejaan
     ("EJ-01", "K", r"\bdimana(?:-mana)?\b", I, "kata depan ditulis terpisah: di mana", 1),
     ("EJ-02", "K", r"\bdi\s(?:analisis|analisa|uji|lakukan|gunakan|ukur|ambil|peroleh|buat|hitung|kembangkan|rancang|teliti|bahas"
@@ -158,11 +166,87 @@ def periksa(teks):
                 hasil.append((baris(m), i, lab, c, sar(c) if callable(sar) else sar))
     for m in POLA_KB.finditer(t):
         hasil.append((baris(m), "KB-01", "K", m.group(0), "baku: " + KATA_BAKU[m.group(0).lower()]))
-    hasil += kalimat_panjang(teks, t)
+    hasil += kalimat_panjang(teks, t) + singkatan(t)
     return sorted(hasil)
 
 
 BATAS_BLOK = re.compile(r"\n(?=[ \t]*(?:\n|[-*+>|#]|\d+[.)][ \t]))")
+
+
+# Akronim yang sering salah ditulis kapital semua (EYD V: nama diri dari suku kata -> huruf awal kapital,
+# bukan nama diri -> huruf kecil). Dicek per token kapital penuh, di luar baris judul berhuruf kapital.
+AKRONIM = {
+    "BAPPENAS": "Bappenas", "BAPPEDA": "Bappeda", "BULOG": "Bulog", "POLRI": "Polri", "DISHUB": "Dishub",
+    "DINKES": "Dinkes", "DISDIK": "Disdik", "KEMENHUB": "Kemenhub", "KEMENKES": "Kemenkes", "KEMENKEU": "Kemenkeu",
+    "KEMENDIKBUD": "Kemendikbud", "KEMENDIKBUDRISTEK": "Kemendikbudristek", "KEMDIKTISAINTEK": "Kemdiktisaintek",
+    "KEMENDIKDASMEN": "Kemendikdasmen", "BUMDES": "BUMDes", "PERPRES": "Perpres", "PERMEN": "Permen", "PERDA": "Perda",
+    "PUSKESMAS": "puskesmas (Puskesmas bila nama)", "POSYANDU": "posyandu (Posyandu bila nama)",
+    "IPTEK": "iptek", "PEMILU": "pemilu", "BALITA": "balita", "AMDAL": "amdal", "TILANG": "tilang", "RUDAL": "rudal",
+    "PEMDA": "pemda (Pemda bila nama)", "PEMKOT": "pemkot (Pemkot bila nama)", "PEMKAB": "pemkab (Pemkab bila nama)",
+    "PEMPROV": "pemprov (Pemprov bila nama)", "GAPOKTAN": "gapoktan (Gapoktan bila nama)",
+}
+POLA_AKRONIM = re.compile(r"\b(" + "|".join(AKRONIM) + r")\b")
+# Singkatan bukan nama diri: kepanjangannya ditulis huruf kecil
+BUKAN_NAMA_DIRI = ("UMKM IKM BUMN BUMD BUMDes SDM SDA KTP SIM TKDN ASN PNS K3 PLTS PLTU PLTA PLTB EBT IPAL B3 TIK RSUD "
+                   "ASI BBLR ISPA PHBS PAUD SD SMP SMA SMK PTN PTS KKN SKS IPK KTI APBN APBD PDB PDRB PPN NPWP KBLBB").split()
+POLA_KEPANJANGAN = re.compile(r"\b[A-Z][a-z]+(?:,?\s+(?:dan\s+|&\s+)?[A-Z][a-z]+)+\s*\(\s*(?:"
+                              + "|".join(BUKAN_NAMA_DIRI) + r")\s*\)")
+# SG-04: token berhuruf kapital minimal dua dan minimal separuhnya kapital: UMKM, IoT, BUMDes
+POLA_TOKEN = re.compile(r"\b[A-Z][A-Za-z0-9]{1,7}\b")
+ROMAWI = re.compile(r"[IVXLCDM]+")
+# ponytail: daftar tetap; tambah di sini bila singkatan yang dikenal luas pembaca ilmiah ikut ditandai
+SINGKATAN_UMUM = set("""RI DKI DIY NTB NTT TK SD SMP SMA SMK MHz GHz MW GW MWh GWh MPa GPa OK DNA RNA PCR COVID
+    DOI ISBN ISSN URL HTTP HTTPS PDF API USB GPS LED LCD CPU GPU RAM PC TV IP WIB WITA WIT UTC IEEE ISO SPSS WHO""".split())
+
+
+def baris_kapital(t, pos):
+    """Baris judul berhuruf kapital semua (BAB I PENDAHULUAN) tidak diperiksa untuk singkatan."""
+    awal, akhir = t.rfind("\n", 0, pos) + 1, t.find("\n", pos)
+    huruf = [c for c in t[awal:akhir if akhir >= 0 else None] if c.isalpha()]
+    return len(huruf) > 3 and all(c.isupper() for c in huruf)
+
+
+def singkatan(t):
+    """SG-04, SG-05, SG-06. Kembalikan daftar temuan."""
+    baris = lambda pos: t.count("\n", 0, pos) + 1
+    hasil, pertama = [], {}
+    for m in POLA_AKRONIM.finditer(t):
+        if not baris_kapital(t, m.start()):
+            hasil.append((baris(m.start()), "SG-05", "K", m.group(0), "akronim: " + AKRONIM[m.group(0)]))
+    for m in POLA_KEPANJANGAN.finditer(t):
+        kep, sing = m.group(0).split("(")
+        # buang kata awal kalimat yang bukan bagian kepanjangan ("Namun Usaha Mikro, …"): ambil kata isi
+        # sebanyak huruf kapital singkatan (UMKM -> 4, BUMDes -> 4)
+        isi = [k for k in re.finditer(r"[A-Z][a-z]+", kep)]
+        n = sum(c.isupper() for c in sing)
+        if 2 <= n < len(isi):
+            kep = kep[isi[-n].start():]
+        if len(re.findall(r"[A-Z][a-z]+", kep)) >= 2:
+            hasil.append((baris(m.start()), "SG-06", "G", " ".join((kep + "(" + sing).split()),
+                          "kepanjangan singkatan bukan nama diri ditulis huruf kecil: " + " ".join(kep.lower().split())))
+    for m in POLA_TOKEN.finditer(t):
+        w = m.group(0)
+        besar = sum(c.isupper() for c in w)
+        sesudah = t[m.end():m.end() + 2]
+        if (besar < 2 or besar * 2 < sum(c.isalpha() for c in w) or w in SINGKATAN_UMUM or ROMAWI.fullmatch(w)
+                or w in AKRONIM or baris_kapital(t, m.start()) or re.match(r"-\d", sesudah)  # KE-01, COVID-19
+                or (len(w) > 3 and any(c.isdigit() for c in w))  # ESP32, STM32; K3 dan B3 tetap diperiksa
+                or t[t.rfind("\n", 0, m.start()) + 1:].lstrip().startswith("|")  # baris tabel
+                or re.search(r"\[[^\]\n]*$", t[max(0, m.start() - 60):m.start()])  # [PERLU DATA: …], [NAMA ALAT]
+                or (w.isupper() and re.match(r"\s+[A-Z]{3,}\b", t[m.end():]))):  # label: TIDAK DITEMUKAN
+            continue
+        pertama.setdefault(w, []).append(m.start())
+    for w, posisi in pertama.items():
+        def menjelaskan(i):  # "(…, UMKM)" atau "UMKM (kepanjangan)"
+            return bool(re.search(r"\([^()\n]*$", t[max(0, i - 120):i]) and re.match(r"\s*[)\],;]", t[i + len(w):])) \
+                or bool(re.match(r"\s*\((?!\s*\d)", t[i + len(w):]))
+        if menjelaskan(posisi[0]):
+            continue
+        ket = ("dijelaskan setelah dipakai; pindahkan kepanjangan ke kemunculan pertama"
+               if any(map(menjelaskan, posisi[1:])) else
+               "belum dijelaskan: tulis kepanjangan (SINGKATAN) pada kemunculan pertama, kecuali sudah di bagian sebelumnya")
+        hasil.append((baris(posisi[0]), "SG-04", "G", w, ket))
+    return hasil
 
 
 def kalimat_panjang(teks, t, maks=35):
@@ -280,6 +364,16 @@ def tes():
         "Antar muka dibuat dengan Qt.": "EJ-05",
         "Non parametrik dipakai.": "EJ-05",
         "Pengujian pada suhu 25 C.": "EJ-09",
+        "Karyawan itu diPHK tahun lalu.": "SG-01",
+        "Omzet UMKMnya naik.": "SG-01",
+        "Bahan, alat, dll disiapkan.": "SG-02",
+        "Data 2019 s/d 2021 dipakai.": "SG-02",
+        "Usaha mikro, kecil, dan menengah (UMKM) tumbuh. UMKM-UMKM itu kecil.": "SG-03",
+        "Data UMKM diambil dari BPS.": "SG-04",
+        "Data UMKM diambil. Usaha mikro, kecil, dan menengah (UMKM) tumbuh.": "SG-04",
+        "Data dari BAPPENAS dipakai.": "SG-05",
+        "Perkembangan IPTEK pesat.": "SG-05",
+        "Usaha Mikro, Kecil, dan Menengah (UMKM) tumbuh.": "SG-06",
         "Catu daya 3.3V dipakai.": "EJ-08",
     }
     benar = [
@@ -309,6 +403,15 @@ def tes():
         "Data diolah.\n\n## Daftar Pustaka\n\nSmith, J. (2020). Multi agent systems for inter vehicle use.",
         "DAFTAR PUSTAKA\nGarcia, L. (2019). Ultra wideband sensing. Respon sistem.",
         "Suhu 25 °C dipakai.",
+        "Karyawan itu di-PHK (pemutusan hubungan kerja). Omzet usaha mikro, kecil, dan menengah (UMKM) dan UMKM-nya naik.",
+        "Bahan, alat, dll. disiapkan dari 2019 s.d. 2021 (Santoso dkk., 2020).",
+        "Usaha mikro, kecil, dan menengah (UMKM) tumbuh. Banyak UMKM kecil.",
+        "Data diambil dari Badan Pusat Statistik (BPS). BPS mencatat kenaikan.",
+        "*Internet of Things* (IoT) dipakai. Sistem IoT ini murah.",
+        "Bab IV membahas hasil pada frekuensi 433 MHz.",
+        "BAB I PENDAHULUAN DAN BAPPENAS",
+        "Data dari Bappenas dan puskesmas dipakai.",
+        "Sistem memakai ESP32 dan modul LoRa (*long range*).",
         " ".join(["kata"] * 35) + ".",
         "- " + " ".join(["butir"] * 20) + "\n- " + " ".join(["butir"] * 20),
         "| " + " | ".join(["sel"] * 40) + " |",
@@ -334,6 +437,10 @@ def tes():
             or not h.get("EJ-07", ("",) * 5)[4].endswith("3,3V"):
         gagal += 1
         print("GAGAL saran dinamis:", h)
+    h = [x for x in periksa("Namun Usaha Mikro, Kecil, dan Menengah (UMKM) sulit.") if x[1] == "SG-06"]
+    if [x[3] for x in h] != ["Usaha Mikro, Kecil, dan Menengah (UMKM)"]:
+        gagal += 1
+        print("GAGAL kepanjangan SG-06:", h)
     # banding: (asli, hasil, laporan yang diharapkan)
     kasus_banding = [
         ("Galat turun dari 4,8% menjadi 1,2% (p < 0,01).", "Galat turun dari 4,8% ke 1,2% (p < 0,01).", []),
@@ -354,7 +461,7 @@ def tes():
     galat = validasi()
     for g in galat:
         print("GAGAL validasi:", g)
-    total = len(salah) + len(benar) + 2 + len(kasus_banding)
+    total = len(salah) + len(benar) + 3 + len(kasus_banding)
     print(f"{total - gagal}/{total} kasus lulus" + ("" if not galat else f", {len(galat)} galat validasi"))
     return 1 if gagal or galat else 0
 
@@ -378,10 +485,13 @@ def main(argv):
             print(f"[{jenis}] {ket}")
         print("Angka, sitasi, dan kutipan sama." if not laporan else f"{len(laporan)} perbedaan; periksa satu per satu.")
         return 1 if any(j != "PEMISAH" for j, _ in laporan) else 0
+    abaikan = set()
+    if argv[0] == "--abaikan":
+        abaikan, argv = set(argv[1].split(",")), argv[2:]
     ada_k = False
     for nama in argv:
         teks = sys.stdin.read() if nama == "-" else Path(nama).read_text(encoding="utf-8")
-        temuan = periksa(teks)
+        temuan = [x for x in periksa(teks) if x[1] not in abaikan]
         for baris, id_, lab, cuplikan, saran in temuan:
             ada_k |= lab == "K"
             print(f"{nama}:{baris}: [{id_} {lab}] {cuplikan!r}: {saran}")
