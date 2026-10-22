@@ -1,5 +1,10 @@
 # naskah-id
 
+[![GitHub stars](https://img.shields.io/github/stars/nothinx/naskah-id?style=flat&logo=github)](https://github.com/nothinx/naskah-id/stargazers)
+[![Versi](https://img.shields.io/github/v/tag/nothinx/naskah-id?label=versi)](CHANGELOG.md)
+[![Lisensi: MIT](https://img.shields.io/badge/lisensi-MIT-blue)](LICENSE)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-npx%20skills%20add-black)](#pemasangan)
+
 Skill agen AI untuk menulis dan menyunting karya ilmiah berbahasa Indonesia: artikel jurnal,
 skripsi, tesis, proposal hibah, dan laporan penelitian. Ejaan dan kata mengikuti EYD V dan
 KBBI. Angka, hasil, dan sitasi Anda tidak diubah.
@@ -373,6 +378,16 @@ Laporan paling berguna ada dua jenis:
 Sebelum mengirim perubahan, jalankan `python scripts/periksa.py --tes`,
 `python scripts/openalex.py --tes`, dan `python evals/jalankan.py --tes`, lalu periksa berkas
 Markdown repo dengan `periksa.py`. Repo ini tidak boleh melanggar katalognya sendiri.
+
+## Riwayat bintang
+
+<a href="https://star-history.com/#nothinx/naskah-id&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=nothinx/naskah-id&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=nothinx/naskah-id&type=Date" />
+    <img alt="Grafik riwayat bintang naskah-id" src="https://api.star-history.com/svg?repos=nothinx/naskah-id&type=Date" />
+  </picture>
+</a>
 
 ## Lisensi
 
