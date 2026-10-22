@@ -103,8 +103,12 @@ Bandingkan draf dengan teks asli:
 - Kekuatan klaim tidak naik? ("diduga" tidak menjadi "terbukti").
 - Istilah teknis tetap konsisten dari awal sampai akhir?
 
-Bila tersedia, jalankan `python scripts/periksa.py <berkas>` untuk menyaring pola K dan AI
-yang terlewat. Hasilnya petunjuk, bukan putusan.
+Bila Python tersedia, simpan teks asli dan draf ke berkas lalu jalankan
+`python scripts/periksa.py --banding asli.md draf.md`. Perintah ini melaporkan angka, sitasi,
+dan kutipan yang hilang atau bertambah. Setiap baris laporan harus bisa dijelaskan sebelum draf
+diserahkan, misalnya angka yang sengaja ditulis dengan huruf. Lalu jalankan
+`python scripts/periksa.py <berkas>` untuk menyaring pola K dan AI yang terlewat. Hasil
+keduanya petunjuk, bukan putusan.
 
 ### 5. Serahkan
 

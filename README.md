@@ -243,6 +243,7 @@ dan menandai klaim yang belum berujukan dengan `[PERLU RUJUKAN: …]`.
 
 ```bash
 python scripts/periksa.py naskah.md
+python scripts/periksa.py --banding asli.md hasil.md   # angka, sitasi, kutipan yang berubah
 python scripts/periksa.py --tes
 ```
 
