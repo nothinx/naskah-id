@@ -109,7 +109,7 @@ Bila Python tersedia, simpan teks asli dan draf ke berkas lalu jalankan
 `python scripts/periksa.py --banding asli.md draf.md`. Perintah ini melaporkan angka, sitasi,
 dan kutipan yang hilang atau bertambah. Setiap baris laporan harus bisa dijelaskan sebelum draf
 diserahkan, misalnya angka yang sengaja ditulis dengan huruf. Lalu jalankan
-`python scripts/periksa.py <berkas>` untuk menyaring pola K dan AI yang terlewat. Hasil
+`python scripts/periksa.py <berkas>` (menerima `.md`, `.txt`, dan `.docx`) untuk menyaring pola K dan AI yang terlewat. Hasil
 keduanya petunjuk, bukan putusan.
 
 ### 5. Serahkan

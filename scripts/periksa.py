@@ -5,12 +5,15 @@ Hasilnya petunjuk, bukan putusan: setiap temuan perlu dibaca dalam konteksnya.
 Jangan dipakai untuk menilai apakah sebuah teks ditulis mesin.
 
 Pemakaian:
-    python scripts/periksa.py naskah.md [lain.txt ...]   # periksa berkas
-    python scripts/periksa.py -                         # baca dari stdin
-    python scripts/periksa.py --banding asli.md hasil.md # angka, sitasi, kutipan yang berubah
-    python scripts/periksa.py --tes                      # uji mandiri
-    python scripts/periksa.py --validasi                 # cek SKILL.md dan rujukannya
+    python scripts/periksa.py naskah.md [skripsi.docx ...]  # periksa berkas (.md, .txt, .docx)
+    python scripts/periksa.py -                             # baca dari stdin
+    python scripts/periksa.py --banding asli.md hasil.md    # angka, sitasi, kutipan yang berubah (.md, .txt, .docx)
+    python scripts/periksa.py --tes                         # uji mandiri
+    python scripts/periksa.py --validasi                    # cek SKILL.md dan rujukannya
     python scripts/periksa.py --abaikan SG-04,KL-01 naskah.md  # lewati kode tertentu
+
+Pada berkas .docx, teks diambil per paragraf dari word/document.xml dan nomor baris laporan
+adalah nomor paragraf.
 
 Teks yang dilewati: blok kode, `kode sebaris`, ~~coret~~, URL, dan wilayah antara
 <!-- periksa:abaikan --> dan <!-- periksa:lanjut -->, serta baris yang diawali
@@ -21,6 +24,9 @@ Kode keluar 1 bila ada temuan K (atau, pada --banding, ada fakta yang berubah), 
 """
 import re
 import sys
+import tempfile
+import xml.etree.ElementTree as ET
+import zipfile
 from collections import Counter
 from pathlib import Path
 
@@ -108,32 +114,60 @@ POLA = [
     ("AI-19", "AI", r"\bdengan kata lain\b", I, "pengisi berulang", 2),
 ]
 
-# Kata tidak baku -> baku (KBBI). Dicocokkan sebagai kata utuh, tanpa membedakan huruf besar.
+# Kata tidak baku -> baku (KBBI, sinkron dengan references/kata-baku.md). Dicocokkan sebagai kata utuh.
 KATA_BAKU = {
     "analisa": "analisis", "dianalisa": "dianalisis", "menganalisa": "menganalisis", "hipotesa": "hipotesis",
-    "sintesa": "sintesis", "diagnosa": "diagnosis", "praktek": "praktik", "tehnik": "teknik", "metoda": "metode",
-    "sistim": "sistem", "sistimatis": "sistematis", "resiko": "risiko", "kwalitas": "kualitas", "kwantitas": "kuantitas",
-    "frekwensi": "frekuensi", "prosentase": "persentase", "obyek": "objek", "subyek": "subjek", "obyektif": "objektif",
+    "sintesa": "sintesis", "diagnosa": "diagnosis", "praktek": "praktik", "mempraktekkan": "mempraktikkan",
+    "dipraktekkan": "dipraktikkan", "tehnik": "teknik", "metoda": "metode", "sistim": "sistem",
+    "sistimatis": "sistematis", "ekosistim": "ekosistem", "resiko": "risiko", "kwalitas": "kualitas",
+    "kwantitas": "kuantitas", "frekwensi": "frekuensi", "kwalifikasi": "kualifikasi", "kwota": "kuota",
+    "kwartal": "kuartal", "kwadrat": "kuadrat", "kwitansi": "kuitansi", "prosentase": "persentase",
+    "presentase": "persentase", "obyek": "objek", "subyek": "subjek", "obyektif": "objektif",
     "subyektif": "subjektif", "projek": "proyek", "aktifitas": "aktivitas", "efektifitas": "efektivitas",
     "produktifitas": "produktivitas", "kreatifitas": "kreativitas", "sensitifitas": "sensitivitas",
-    "standarisasi": "standardisasi", "ekstrim": "ekstrem", "katagori": "kategori", "merubah": "mengubah",
-    "dirubah": "diubah", "mempengaruhi": "memengaruhi", "mengkonsumsi": "mengonsumsi",
-    "mensukseskan": "menyukseskan", "mentaati": "menaati", "menterjemahkan": "menerjemahkan",
-    "mengkonfirmasi": "mengonfirmasi", "mengkoordinasikan": "mengoordinasikan", "mensosialisasikan": "menyosialisasikan",
-    "mentargetkan": "menargetkan", "mempopulerkan": "memopulerkan", "seksama": "saksama", "sekedar": "sekadar",
-    "tolak ukur": "tolok ukur", "silahkan": "silakan", "ijin": "izin", "nasehat": "nasihat", "jaman": "zaman",
-    "jadual": "jadwal", "hakekat": "hakikat", "kadaluarsa": "kedaluwarsa", "kadaluwarsa": "kedaluwarsa",
-    "nampak": "tampak", "himbau": "imbau", "menghimbau": "mengimbau", "himbauan": "imbauan", "terlanjur": "telanjur",
-    "trampil": "terampil", "ketrampilan": "keterampilan", "pondasi": "fondasi", "propinsi": "provinsi",
-    "teoritis": "teoretis", "konkrit": "konkret", "managemen": "manajemen", "manajement": "manajemen",
-    "detil": "detail", "varitas": "varietas", "kontinyu": "kontinu", "orisinil": "orisinal", "realita": "realitas",
-    "faham": "paham", "apotik": "apotek", "atlit": "atlet", "cidera": "cedera", "legalisir": "legalisasi",
-    "celcius": "Celsius", "ijasah": "ijazah", "komplek": "kompleks", "respon": "respons",
-    "kharisma": "karisma", "kwitansi": "kuitansi", "nopember": "November", "menunjukan": "menunjukkan", "ditunjukan": "ditunjukkan",
+    "reaktifitas": "reaktivitas", "konektifitas": "konektivitas", "standarisasi": "standardisasi",
+    "ekstrim": "ekstrem", "katagori": "kategori", "komplek": "kompleks", "komplit": "komplet",
+    "teoritis": "teoretis", "konkrit": "konkret", "orisinil": "orisinal", "realita": "realitas",
+    "respon": "respons", "hirarki": "hierarki", "kuisioner": "kuesioner", "komoditi": "komoditas",
+    "otentik": "autentik", "karir": "karier", "managemen": "manajemen", "manajement": "manajemen",
+    "detil": "detail", "varitas": "varietas", "kontinyu": "kontinu", "apotik": "apotek", "atlit": "atlet",
+    "cidera": "cedera", "syaraf": "saraf", "atmosfir": "atmosfer", "kadaluarsa": "kedaluwarsa",
+    "kadaluwarsa": "kedaluwarsa", "legalisir": "legalisasi", "amandemen": "amendemen", "propinsi": "provinsi",
+    "pebruari": "Februari", "nopember": "November", "kharisma": "karisma", "celcius": "celsius",
+    "seksama": "saksama", "sekedar": "sekadar", "tolak ukur": "tolok ukur", "silahkan": "silakan",
+    "ijin": "izin", "diijinkan": "diizinkan", "mengijinkan": "mengizinkan", "nasehat": "nasihat",
+    "menasehati": "menasihati", "jaman": "zaman", "jadual": "jadwal", "hakekat": "hakikat", "ijasah": "ijazah",
+    "nampak": "tampak", "terlanjur": "telanjur", "faham": "paham", "pondasi": "fondasi", "kaedah": "kaidah",
+    "himbau": "imbau", "menghimbau": "mengimbau", "himbauan": "imbauan", "trampil": "terampil",
+    "ketrampilan": "keterampilan", "handal": "andal", "kehandalan": "keandalan", "berfikir": "berpikir",
+    "perduli": "peduli", "memperdulikan": "memedulikan", "antri": "antre", "antrian": "antrean",
+    "lembab": "lembap", "kelembaban": "kelembapan", "nafas": "napas", "bernafas": "bernapas",
+    "pernafasan": "pernapasan", "menunjukan": "menunjukkan", "ditunjukan": "ditunjukkan",
+    "azas": "asas", "kosa kata": "kosakata", "merubah": "mengubah", "dirubah": "diubah",
+    "mempengaruhi": "memengaruhi", "mengkonsumsi": "mengonsumsi", "mengkonfirmasi": "mengonfirmasi",
+    "mengkoordinasikan": "mengoordinasikan", "mengkategorikan": "mengategorikan",
+    "mengkombinasikan": "mengombinasikan", "mengkomunikasikan": "mengomunikasikan", "mengkoreksi": "mengoreksi",
+    "mensukseskan": "menyukseskan", "mensosialisasikan": "menyosialisasikan", "mensimulasikan": "menyimulasikan",
+    "mentaati": "menaati", "menterjemahkan": "menerjemahkan", "mentargetkan": "menargetkan",
+    "mentelaah": "menelaah", "mempopulerkan": "memopulerkan", "mempublikasikan": "memublikasikan",
 }
 POLA_KB = re.compile(r"\b(" + "|".join(sorted(map(re.escape, KATA_BAKU), key=len, reverse=True)) + r")\b", I)
 
 POLA_C = [(i, lab, re.compile(rx, fl | re.M), sar, mn) for i, lab, rx, fl, sar, mn in POLA]
+
+
+def baca(nama):
+    """Baca teks dari stdin ('-'), berkas .docx (satu paragraf per baris), atau berkas teks."""
+    if nama == "-":
+        return sys.stdin.read()
+    jalur = Path(nama)
+    if jalur.suffix.lower() == ".docx":
+        with zipfile.ZipFile(jalur) as z, z.open("word/document.xml") as f:
+            akar = ET.parse(f).getroot()
+        paragraf = ["".join(t.text or "" for t in p.iter() if t.tag.endswith(("}t", ":t")) or t.tag == "t").replace("\n", " ")
+                    for p in akar.iter() if p.tag.endswith(("}p", ":p")) or p.tag == "p"]
+        return "\n".join(paragraf)  # paragraf kosong ikut agar nomor baris = nomor paragraf
+    return jalur.read_text(encoding="utf-8")
 
 
 def bersihkan(teks):
@@ -170,7 +204,7 @@ def periksa(teks):
     return sorted(hasil)
 
 
-BATAS_BLOK = re.compile(r"\n(?=[ \t]*(?:\n|[-*+>|#]|\d+[.)][ \t]))")
+BATAS_BLOK = re.compile(r"\n(?=[ \t]*(?:\n|>[ \t]*\n|[-*+|#]|\d+[.)][ \t]))")
 
 
 # Akronim yang sering salah ditulis kapital semua (EYD V: nama diri dari suku kata -> huruf awal kapital,
@@ -196,8 +230,9 @@ POLA_KEPANJANGAN = re.compile(r"\b[A-Z][a-z]+(?:,?\s+(?:dan\s+|&\s+)?[A-Z][a-z]+
 POLA_TOKEN = re.compile(r"\b[A-Z][A-Za-z0-9]{1,7}\b")
 ROMAWI = re.compile(r"[IVXLCDM]+")
 # ponytail: daftar tetap; tambah di sini bila singkatan yang dikenal luas pembaca ilmiah ikut ditandai
-SINGKATAN_UMUM = set("""RI DKI DIY NTB NTT TK SD SMP SMA SMK MHz GHz MW GW MWh GWh MPa GPa OK DNA RNA PCR COVID
-    DOI ISBN ISSN URL HTTP HTTPS PDF API USB GPS LED LCD CPU GPU RAM PC TV IP WIB WITA WIT UTC IEEE ISO SPSS WHO""".split())
+SINGKATAN_UMUM = set("""RI DKI DIY NTB NTT TK SD SMP SMA SMK MI MTs MA MHz GHz MW GW MWh GWh MPa GPa OK DNA RNA PCR COVID
+    DOI ISBN ISSN URL HTTP HTTPS PDF API USB GPS LED LCD CPU GPU RAM PC TV IP WIB WITA WIT UTC IEEE ISO SPSS WHO
+    MIT GPL LGPL AGPL BSD CC0""".split())
 
 
 def baris_kapital(t, pos):
@@ -232,8 +267,9 @@ def singkatan(t):
         if (besar < 2 or besar * 2 < sum(c.isalpha() for c in w) or w in SINGKATAN_UMUM or ROMAWI.fullmatch(w)
                 or w in AKRONIM or baris_kapital(t, m.start()) or re.match(r"-\d", sesudah)  # KE-01, COVID-19
                 or (len(w) > 3 and any(c.isdigit() for c in w))  # ESP32, STM32; K3 dan B3 tetap diperiksa
+                or re.search(r"\bCC[\s-]+(?:(?:BY|NC|ND|SA)[\s-]*)*$", t[max(0, m.start() - 20):m.start()])  # CC BY-SA
                 or t[t.rfind("\n", 0, m.start()) + 1:].lstrip().startswith("|")  # baris tabel
-                or re.search(r"\[[^\]\n]*$", t[max(0, m.start() - 60):m.start()])  # [PERLU DATA: …], [NAMA ALAT]
+                or re.search(r"\[[^\]]*$", t[max(0, m.start() - 200):m.start()])  # [PERLU DATA: …], [NAMA ALAT]
                 or (w.isupper() and re.match(r"\s+[A-Z]{3,}\b", t[m.end():]))):  # label: TIDAK DITEMUKAN
             continue
         pertama.setdefault(w, []).append(m.start())
@@ -360,6 +396,9 @@ def tes():
         "Kami melakukan analisa data.": "KB-01",
         "Berdasarkan hasil penelitian menyimpulkan bahwa nilainya sedang.": "KE-01",
         "Hasil uji menunjukan nilai r.": "KB-01",
+        "Data dikumpulkan dengan kuisioner untuk menguji hirarki dan kelembaban.": "KB-01",
+        "Sistem antrian ini handal untuk melatih kemampuan berfikir.": "KB-01",
+        "Peneliti mengkategorikan dan mempublikasikan hasil.": "KB-01",
         "Galat turun, sehingga akurasi naik.": "EJ-10",
         "Hal ini benar. Hal ini salah. Hal ini lagi.": "AI-15",
         "Antar muka dibuat dengan Qt.": "EJ-05",
@@ -413,6 +452,9 @@ def tes():
         "BAB I PENDAHULUAN DAN BAPPENAS",
         "Data dari Bappenas dan puskesmas dipakai.",
         "Sistem memakai ESP32 dan modul LoRa (*long range*).",
+        "Artikel ini berlisensi CC BY-SA 4.0 dan CC BY-NC-ND, sedangkan kodenya MIT dan GPL.",
+        "Sampel diambil dari siswa SD/MI, SMP/MTs, dan SMA/MA.",
+        "Prevalensi masih tinggi [PERLU DATA: angka\nterbaru dan sumbernya, misalnya SSGI].",
         " ".join(["kata"] * 35) + ".",
         "- " + " ".join(["butir"] * 20) + "\n- " + " ".join(["butir"] * 20),
         "| " + " | ".join(["sel"] * 40) + " |",
@@ -442,6 +484,19 @@ def tes():
     if [x[3] for x in h] != ["Usaha Mikro, Kecil, dan Menengah (UMKM)"]:
         gagal += 1
         print("GAGAL kepanjangan SG-06:", h)
+    # berkas .docx: nomor baris = nomor paragraf, dan --banding mendukung .docx
+    with tempfile.TemporaryDirectory() as d:
+        ns = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"'
+        def buat(nama, par):
+            with zipfile.ZipFile(Path(d) / nama, "w") as z:
+                z.writestr("word/document.xml", f"<w:document {ns}><w:body>"
+                           + "".join(f"<w:p><w:r><w:t>{p}</w:t></w:r></w:p>" for p in par) + "</w:body></w:document>")
+        buat("uji.docx", ["Paragraf pertama bersih.", "Dari hasil pengujian menunjukkan analisa salah."])
+        buat("hasil.docx", ["Paragraf pertama bersih dan galat 1,5%.", "Hasil pengujian menunjukkan analisis benar."])
+        h_docx = [(x[0], x[1]) for x in periksa(baca(Path(d) / "uji.docx"))]
+        if h_docx != [(2, "KB-01"), (2, "KE-01")] or banding(baca(Path(d) / "uji.docx"), baca(Path(d) / "hasil.docx")) != [("ANGKA", "baru: 1,5%")]:
+            gagal += 1
+            print("GAGAL docx:", h_docx)
     # banding: (asli, hasil, laporan yang diharapkan)
     kasus_banding = [
         ("Galat turun dari 4,8% menjadi 1,2% (p < 0,01).", "Galat turun dari 4,8% ke 1,2% (p < 0,01).", []),
@@ -462,7 +517,7 @@ def tes():
     galat = validasi()
     for g in galat:
         print("GAGAL validasi:", g)
-    total = len(salah) + len(benar) + 3 + len(kasus_banding)
+    total = len(salah) + len(benar) + 4 + len(kasus_banding)
     print(f"{total - gagal}/{total} kasus lulus" + ("" if not galat else f", {len(galat)} galat validasi"))
     return 1 if gagal or galat else 0
 
@@ -481,7 +536,7 @@ def main(argv):
         if len(argv) != 3:
             print("pemakaian: periksa.py --banding asli.md hasil.md")
             return 2
-        laporan = banding(*(Path(n).read_text(encoding="utf-8") for n in argv[1:]))
+        laporan = banding(*(baca(n) for n in argv[1:]))
         for jenis, ket in laporan:
             print(f"[{jenis}] {ket}")
         print("Angka, sitasi, dan kutipan sama." if not laporan else f"{len(laporan)} perbedaan; periksa satu per satu.")
@@ -490,8 +545,8 @@ def main(argv):
     if argv[0] == "--abaikan":
         abaikan, argv = set(argv[1].split(",")), argv[2:]
     ada_k = False
-    for nama in argv:
-        teks = sys.stdin.read() if nama == "-" else Path(nama).read_text(encoding="utf-8")
+    for nama in (p for a in argv for p in (sorted(map(str, Path().glob(a))) if "*" in a or "?" in a else [a])):
+        teks = baca(nama)
         temuan = [x for x in periksa(teks) if x[1] not in abaikan]
         for baris, id_, lab, cuplikan, saran in temuan:
             ada_k |= lab == "K"

@@ -43,7 +43,9 @@ def cek_otomatis(kasus, jawaban):
         a, j = fakta(kasus["bahan"]), fakta(jawaban)
         gagal += [f"{jenis.lower()} hilang: {x}" for jenis in a for x in (a[jenis] - j[jenis]).elements()]
     gagal += [f"tidak ditemukan: /{rx}/" for rx in kasus.get("harus_ada", []) if not re.search(rx, jawaban)]
-    gagal += [f"terlarang muncul: /{rx}/" for rx in kasus.get("tidak_boleh_ada", []) if re.search(rx, jawaban)]
+    # catatan perubahan wajar mengutip teks asli, jadi pola terlarang hanya dicari di teks hasil
+    hasil = re.split(r"(?im)^.*catatan perubahan.*$", jawaban)[0]
+    gagal += [f"terlarang muncul: /{rx}/" for rx in kasus.get("tidak_boleh_ada", []) if re.search(rx, hasil)]
     return gagal
 
 
@@ -117,6 +119,7 @@ def tes():
     kasus = {"bahan": "Galat turun dari 4,8% menjadi 1,2% (Santoso, 2020).", "harus_ada": [r"\bturun\b"],
              "tidak_boleh_ada": [r"mengalami penurunan"]}
     assert cek_otomatis(kasus, "Galat turun dari 4,8% menjadi 1,2% (Santoso, 2020).") == []
+    assert cek_otomatis(kasus, "Galat turun dari 4,8% menjadi 1,2% (Santoso, 2020).\n\n### Catatan perubahan\n- 'mengalami penurunan' diganti 'turun'.") == []
     assert cek_otomatis(kasus, "Galat mengalami penurunan dari 4,8% menjadi 1,3%.") == [
         "sitasi hilang: (Santoso, 2020)", "angka hilang: 1,2%", r"tidak ditemukan: /\bturun\b/", "terlarang muncul: /mengalami penurunan/"]
     assert nilai_penilai("1: LULUS - ok\n2: GAGAL - angka berubah", 3) == [(True, "ok"), (False, "angka berubah"), (False, "tidak dinilai")]

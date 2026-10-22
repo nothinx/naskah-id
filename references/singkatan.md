@@ -116,34 +116,39 @@ Kolom ND menandai nama diri: kepanjangannya ditulis kapital.
 
 ### Kesehatan
 
-| Singkatan | Kepanjangan | ND |
-| --- | --- | --- |
-| puskesmas | pusat kesehatan masyarakat | |
-| posyandu | pos pelayanan terpadu | |
-| RSUD | rumah sakit umum daerah | |
-| BPJS | Badan Penyelenggara Jaminan Sosial | ya |
-| JKN | Jaminan Kesehatan Nasional | ya |
-| ASI, MP-ASI | air susu ibu, makanan pendamping ASI | |
-| BBLR | berat badan lahir rendah | |
-| ISPA | infeksi saluran pernapasan akut | |
-| DBD | demam berdarah *dengue* | |
-| PHBS | perilaku hidup bersih dan sehat | |
-| balita | bawah lima tahun | |
+Diverifikasi ke regulasi Kemenkes, BPJS Kesehatan, dan KBBI (Oktober 2026):
+
+| Singkatan | Kepanjangan | Sumber resmi | ND |
+| --- | --- | --- | --- |
+| puskesmas | pusat kesehatan masyarakat | Permenkes 43/2019; KBBI | |
+| posyandu | pos pelayanan terpadu | Permendagri 18/2018; KBBI | |
+| RSUD | rumah sakit umum daerah | UU 44/2009; PP 72/2019 | |
+| BPJS | Badan Penyelenggara Jaminan Sosial | UU 24/2011 | ya |
+| JKN | Jaminan Kesehatan Nasional | Permenkes 28/2014 | ya |
+| ASI, MP-ASI | air susu ibu, makanan pendamping air susu ibu (pedoman Kemenkes juga menulis MPASI) | PP 33/2012; Kemenkes | |
+| BBLR | berat badan lahir rendah | Kemenkes | |
+| ISPA | infeksi saluran pernapasan akut | Kemenkes | |
+| DBD | demam berdarah dengue (*dengue* sudah diserap di KBBI, tidak dicetak miring) | Kemenkes; KBBI | |
+| PHBS | perilaku hidup bersih dan sehat | Permenkes 2269/2011 | |
+| balita | bawah lima tahun (KBBI: anak bawah lima tahun) | Kemenkes; KBBI | |
 
 ### Pendidikan dan akademik
 
-| Singkatan | Kepanjangan | ND |
-| --- | --- | --- |
-| PAUD, TK, SD, SMP, SMA, SMK | pendidikan anak usia dini, taman kanak-kanak, sekolah dasar, sekolah menengah pertama/atas/kejuruan | |
-| MI, MTs, MA | madrasah ibtidaiah, madrasah tsanawiah, madrasah aliah | |
-| PT, PTN, PTS | perguruan tinggi (negeri/swasta) | |
-| KKN | kuliah kerja nyata | |
-| SKS, IPK | satuan kredit semester, indeks prestasi kumulatif | |
-| LPPM | lembaga penelitian dan pengabdian kepada masyarakat (kapital bila nama lembaga tertentu) | |
-| KKNI | Kerangka Kualifikasi Nasional Indonesia | ya |
-| MBKM | Merdeka Belajar Kampus Merdeka | ya |
-| KTI | karya tulis ilmiah | |
-| SINTA | Science and Technology Index | ya |
+Diverifikasi ke UU 20/2003 (Sisdiknas), UU 12/2012 (Pendidikan Tinggi), regulasi
+Kemendikbudristek/Kemdiktisaintek, Kemenag, dan KBBI (Oktober 2026):
+
+| Singkatan | Kepanjangan | Sumber resmi | ND |
+| --- | --- | --- | --- |
+| PAUD, TK, SD, SMP, SMA, SMK | pendidikan anak usia dini, taman kanak-kanak, sekolah dasar, sekolah menengah pertama/atas/kejuruan | UU 20/2003 | |
+| MI, MTs, MA | madrasah ibtidaiah, madrasah sanawiah, madrasah aliah (KBBI; UU 20/2003 dan Kemenag menulis ibtidaiyah, tsanawiyah, aliyah) | KBBI; UU 20/2003; PMA 90/2013 | |
+| PT, PTN, PTS | perguruan tinggi (negeri/swasta) | UU 12/2012 | |
+| KKN | kuliah kerja nyata | Permendikbudristek 2/2024; KBBI | |
+| SKS, IPK | satuan kredit semester, indeks prestasi kumulatif | Permendikbudristek 53/2023; KBBI | |
+| LPPM | lembaga penelitian dan pengabdian kepada masyarakat (kapital bila nama lembaga tertentu) | peraturan OTK tiap perguruan tinggi | |
+| KKNI | Kerangka Kualifikasi Nasional Indonesia | Perpres 8/2012 | ya |
+| MBKM | Merdeka Belajar Kampus Merdeka | Permendikbud 22/2020 | ya |
+| KTI | karya tulis ilmiah | Perka LIPI 04/E/2012 | |
+| SINTA | Science and Technology Index | Kemdiktisaintek | ya |
 
 ### Statistik dan metode
 

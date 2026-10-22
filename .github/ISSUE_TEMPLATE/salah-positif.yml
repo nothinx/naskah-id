@@ -1,0 +1,36 @@
+name: Salah positif
+description: Laporkan kalimat benar yang ditandai periksa.py atau dikoreksi berlebihan oleh agen.
+title: "[Salah positif] "
+labels: ["salah-positif"]
+body:
+  - type: dropdown
+    id: sumber
+    attributes:
+      label: Ditandai oleh
+      options:
+        - scripts/periksa.py
+        - Agen yang memakai skill naskah-id
+        - Keduanya
+    validations:
+      required: true
+  - type: textarea
+    id: kalimat
+    attributes:
+      label: Kalimat yang ditandai
+      description: Salin kalimat atau paragraf yang seharusnya dipertahankan.
+    validations:
+      required: true
+  - type: textarea
+    id: keluaran
+    attributes:
+      label: Temuan periksa.py atau koreksi agen
+      description: Misalnya kode pola [KE-01 K] atau perubahan yang dilakukan agen.
+    validations:
+      required: true
+  - type: textarea
+    id: alasan
+    attributes:
+      label: Alasan kalimat itu sudah benar
+      description: Jelaskan kaidah EYD V/KBBI, konteks kalimat, atau konvensi bidang yang membuatnya sah.
+    validations:
+      required: true

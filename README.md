@@ -249,9 +249,10 @@ dan menandai klaim yang belum berujukan dengan `[PERLU RUJUKAN: …]`.
 ## Pemeriksa cepat
 
 `scripts/periksa.py` menyaring pola kaidah dan klise mesin tanpa memanggil model apa pun.
+Menerima berkas `.md`, `.txt`, dan `.docx` (pada `.docx`, nomor baris adalah nomor paragraf).
 
 ```bash
-python scripts/periksa.py naskah.md
+python scripts/periksa.py naskah.md skripsi.docx
 python scripts/periksa.py --banding asli.md hasil.md   # angka, sitasi, kutipan yang berubah
 python scripts/periksa.py --tes
 ```
@@ -278,7 +279,7 @@ Bagian Daftar Pustaka, Referensi, dan Abstract dilewati.
 ```
 
 Pemeriksa ini sengaja sederhana. Pada [uji abstrak nyata](contoh/korpus/uji-abstrak-pendidikan.md),
-ia menemukan 4 masalah dan melewatkan 6 lainnya yang baru tertangkap saat dibaca. Pada README
+ia menemukan 5 masalah dan melewatkan 5 lainnya yang baru tertangkap saat dibaca. Pada README
 versi sebelumnya, ia tidak menemukan apa pun, padahal ada lima kesalahan isi. Pakai pemeriksa
 sebagai penyaring awal, lalu baca setiap temuan dalam konteksnya.
 

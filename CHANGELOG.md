@@ -3,6 +3,39 @@
 Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/). Versi mengikuti
 [Semantic Versioning](https://semver.org/lang/id/).
 
+## Belum dirilis
+
+### Ditambahkan
+
+- Dukungan berkas `.docx` di `scripts/periksa.py` (termasuk `--banding`) memakai pustaka standar
+  Python; teks diambil per paragraf dari `word/document.xml` dengan nomor baris sama dengan nomor
+  paragraf.
+- Daftar kata tidak baku di `references/kata-baku.md` dan pola KB-01 di `scripts/periksa.py`
+  diperluas dengan bentuk yang sering muncul di skripsi dan jurnal (antara lain *hierarki*,
+  *kuesioner*, *andal*, *berpikir*, *antrean*, *kelembapan*, *pernapasan*, *saraf*, *karier*, dan
+  peluluhan k/p/s/t seperti *mengategorikan*, *mengomunikasikan*, *memublikasikan*).
+- Templat laporan masalah di `.github/ISSUE_TEMPLATE/` (`pola-baru.yml`, `salah-positif.yml`, dan
+  `config.yml`).
+
+### Diperbaiki
+
+- SG-04 di `scripts/periksa.py` tidak lagi menandai nama lisensi (`CC BY`, `CC BY-SA`,
+  `CC BY-NC`, `MIT`, `GPL`, dsb.), jenjang madrasah (`MI`, `MTs`, `MA`), dan singkatan di dalam
+  penanda `[PERLU DATA: …]` yang terpotong ganti baris.
+- KL-01 di `scripts/periksa.py` tidak lagi memotong kalimat panjang pada pergantian baris di
+  dalam kutipan blok (`>`).
+- Hasil uji pada `contoh/korpus/uji-abstrak-pendidikan.md`, `README.md`, dan
+  `contoh/readme-ini.md` diperbarui sesuai keluaran `periksa.py` terkini (menemukan 5 masalah,
+  melewatkan 5 lainnya).
+- Kepanjangan singkatan kesehatan dan pendidikan di `references/singkatan.md` diverifikasi ke
+  regulasi kementerian/lembaga dan KBBI (*dengue* pada DBD tidak dicetak miring karena sudah
+  terserap di KBBI; bentuk KBBI *ibtidaiah/sanawiah/aliah* dan bentuk regulasi
+  *ibtidaiyah/tsanawiyah/aliyah* untuk MI, MTs, MA dicatat beserta sumbernya).
+- Sumber regulasi RSUD, JKN, KKN, LPPM, dan MBKM di `references/singkatan.md` dibetulkan setelah
+  dicek ke naskah peraturannya; *celsius* ditulis berhuruf kecil sesuai KBBI.
+- `evals/jalankan.py` mencari pola `tidak_boleh_ada` hanya di teks hasil, bukan di catatan
+  perubahan yang wajar mengutip teks asli.
+
 ## 1.1.0 (22 Oktober 2026)
 
 ### Ditambahkan

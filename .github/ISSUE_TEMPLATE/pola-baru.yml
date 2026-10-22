@@ -1,0 +1,37 @@
+name: Pola baru
+description: Usulkan pola kaidah (K), gaya (G), atau klise mesin (AI) yang belum tercakup.
+title: "[Pola] "
+labels: ["pola-baru"]
+body:
+  - type: dropdown
+    id: tingkat
+    attributes:
+      label: Tingkat
+      options:
+        - K (kaidah — EYD V, KBBI, tata bahasa baku)
+        - G (gaya — anjuran penyunting)
+        - AI (klise mesin atau kalke Inggris)
+        - Belum pasti
+    validations:
+      required: true
+  - type: textarea
+    id: sebelum
+    attributes:
+      label: Contoh kalimat (sebelum)
+      description: Kalimat dari naskah nyata. Nama, tempat, atau data sensitif boleh disamarkan.
+    validations:
+      required: true
+  - type: textarea
+    id: sesudah
+    attributes:
+      label: Versi perbaikan (sesudah)
+      description: Perbaikan tanpa menambah fakta baru atau mengubah angka dan sitasi.
+    validations:
+      required: true
+  - type: textarea
+    id: dasar
+    attributes:
+      label: Dasar kaidah atau alasan
+      description: Sebutkan rujukan bila ada (EYD V, KBBI, Tata Bahasa Baku Bahasa Indonesia) atau alasan pola ini perlu ditandai.
+    validations:
+      required: false

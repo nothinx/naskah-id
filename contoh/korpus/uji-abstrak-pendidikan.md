@@ -35,15 +35,16 @@ Indonesia diambil dari OpenAlex dan dikutip utuh.
 ```
 [KB-01 K] 'subyek': baku: subjek
 [KB-01 K] 'menunjukan': baku: menunjukkan   (2 kali)
+[KL-01 G] 'Hasil penelitian diketahui tingkat penggunaan media …': 41 kata; pecah menjadi dua kalimat atau lebih
 [KE-01 K] 'Berdasarkan hasil penelitian menyimpulkan': subjek hilang karena kata depan
 ```
 
-Dua temuan terakhir baru tertangkap setelah uji ini: pola `Berdasarkan … menyimpulkan` dan kata
-`menunjukan` ditambahkan ke pemeriksa. Yang tetap terlewat dan ditemukan saat membaca:
+Kalimat `Hasil penelitian diketahui …` tertangkap karena panjangnya (41 kata), sedangkan
+ketidakbersubjekannya baru terlihat saat dibaca (SG-04 juga menandai `PJOK`, yang belum diberi
+singkatan pada kemunculan pertama, dan `ICT`). Lima masalah lain tetap terlewat:
 `penggumpulan` (salah ketik), `sekecamatan` (seharusnya se-Kecamatan), `Guru` berhuruf kapital
-di tengah kalimat, titik yang hilang sesudah `0,381`, kalimat `Hasil penelitian diketahui …`
-yang tidak bersubjek, dan `Teknik pengumpulan data menggunakan angket` yang mengulang kalimat
-ketiga. Pemeriksa regex memang hanya penyaring awal.
+di tengah kalimat, titik yang hilang sesudah `0,381`, dan `Teknik pengumpulan data menggunakan
+angket` yang mengulang kalimat ketiga. Pemeriksa regex memang hanya penyaring awal.
 
 ## Hasil sunting (CC BY-SA 4.0, olahan)
 

@@ -9,16 +9,23 @@ KBBI: entri tidak baku diberi panah ke bentuk bakunya. Daftar di bawah juga dipa
 <!-- periksa:abaikan -->
 | Tidak baku | Baku |
 | --- | --- |
-| analisa, hipotesa, sintesa, diagnosa | analisis, hipotesis, sintesis, diagnosis |
-| praktek, tehnik, metoda, sistim, sistimatis | praktik, teknik, metode, sistem, sistematis |
-| resiko, kwalitas, kwantitas, frekwensi, prosentase | risiko, kualitas, kuantitas, frekuensi, persentase |
-| obyek, subyek, obyektif, projek | objek, subjek, objektif, proyek |
-| aktifitas, efektifitas, produktifitas, kreatifitas, sensitifitas | aktivitas, efektivitas, produktivitas, kreativitas, sensitivitas |
-| standarisasi, ekstrim, katagori, komplek | standardisasi, ekstrem, kategori, kompleks |
+| analisa, dianalisa, menganalisa | analisis, dianalisis, menganalisis |
+| hipotesa, sintesa, diagnosa | hipotesis, sintesis, diagnosis |
+| praktek, mempraktekkan, dipraktekkan | praktik, mempraktikkan, dipraktikkan |
+| tehnik, metoda, sistim, sistimatis, ekosistim | teknik, metode, sistem, sistematis, ekosistem |
+| resiko, kwalitas, kwantitas, frekwensi | risiko, kualitas, kuantitas, frekuensi |
+| kwalifikasi, kwota, kwartal, kwadrat, kwitansi | kualifikasi, kuota, kuartal, kuadrat, kuitansi |
+| prosentase, presentase | persentase |
+| obyek, subyek, obyektif, subyektif, projek | objek, subjek, objektif, subjektif, proyek |
+| aktifitas, efektifitas, produktifitas, kreatifitas | aktivitas, efektivitas, produktivitas, kreativitas |
+| sensitifitas, reaktifitas, konektifitas | sensitivitas, reaktivitas, konektivitas |
+| standarisasi, ekstrim, katagori, komplek, komplit | standardisasi, ekstrem, kategori, kompleks, komplet |
 | teoritis, konkrit, orisinil, realita, respon | teoretis, konkret, orisinal, realitas, respons |
-| managemen, detil, varitas, kontinyu | manajemen, detail, varietas, kontinu |
-| apotik, atlit, cidera, kadaluarsa, legalisir | apotek, atlet, cedera, kedaluwarsa, legalisasi |
-| propinsi, Nopember, kwitansi, kharisma | provinsi, November, kuitansi, karisma |
+| hirarki, kuisioner, komoditi, otentik, karir | hierarki, kuesioner, komoditas, autentik, karier |
+| managemen, manajement, detil, varitas, kontinyu | manajemen, detail, varietas, kontinu |
+| apotik, atlit, cidera, syaraf, atmosfir | apotek, atlet, cedera, saraf, atmosfer |
+| kadaluarsa, kadaluwarsa, legalisir, amandemen | kedaluwarsa, legalisasi, amendemen |
+| propinsi, Pebruari, Nopember, kharisma, celcius | provinsi, Februari, November, karisma, celsius |
 <!-- periksa:lanjut -->
 
 Catatan: *efektif* dan *aktif* tetap memakai "f"; perubahan ke "v" terjadi pada bentuk
@@ -30,8 +37,14 @@ Catatan: *efektif* dan *aktif* tetap memakai "f"; perubahan ke "v" terjadi pada 
 | Tidak baku | Baku |
 | --- | --- |
 | seksama, sekedar, tolak ukur, silahkan | saksama, sekadar, tolok ukur, silakan |
-| ijin, nasehat, jaman, jadual, hakekat, ijasah | izin, nasihat, zaman, jadwal, hakikat, ijazah |
-| nampak, himbau, terlanjur, trampil, faham, pondasi | tampak, imbau, telanjur, terampil, paham, fondasi |
+| ijin, diijinkan, mengijinkan | izin, diizinkan, mengizinkan |
+| nasehat, menasehati, jaman, jadual, hakekat, ijasah | nasihat, menasihati, zaman, jadwal, hakikat, ijazah |
+| nampak, terlanjur, faham, pondasi, kaedah | tampak, telanjur, paham, fondasi, kaidah |
+| himbau, menghimbau, himbauan | imbau, mengimbau, imbauan |
+| trampil, ketrampilan, handal, kehandalan | terampil, keterampilan, andal, keandalan |
+| berfikir, perduli, memperdulikan, antri, antrian | berpikir, peduli, memedulikan, antre, antrean |
+| lembab, kelembaban, nafas, bernafas, pernafasan | lembap, kelembapan, napas, bernapas, pernapasan |
+| menunjukan, ditunjukan, azas, kosa kata | menunjukkan, ditunjukkan, asas, kosakata |
 <!-- periksa:lanjut -->
 
 ## Peluluhan k, p, s, t
@@ -44,9 +57,10 @@ Fonem awal k, p, s, t luluh bila mendapat awalan meng- atau peng-, termasuk pada
 | merubah, dirubah | mengubah, diubah (kata dasar: ubah) |
 | mempengaruhi | memengaruhi (dipengaruhi tetap benar) |
 | mengkonsumsi, mengkonfirmasi, mengkoordinasikan | mengonsumsi, mengonfirmasi, mengoordinasikan |
-| mensukseskan, mensosialisasikan | menyukseskan, menyosialisasikan |
-| mentaati, menterjemahkan, mentargetkan | menaati, menerjemahkan, menargetkan |
-| mempopulerkan | memopulerkan |
+| mengkategorikan, mengkombinasikan, mengkomunikasikan, mengkoreksi | mengategorikan, mengombinasikan, mengomunikasikan, mengoreksi |
+| mensukseskan, mensosialisasikan, mensimulasikan | menyukseskan, menyosialisasikan, menyimulasikan |
+| mentaati, menterjemahkan, mentargetkan, mentelaah | menaati, menerjemahkan, menargetkan, menelaah |
+| mempopulerkan, mempublikasikan | memopulerkan, memublikasikan |
 <!-- periksa:lanjut -->
 
 Pengecualian: fonem tidak luluh bila kata dasarnya diawali gugus konsonan, misalnya

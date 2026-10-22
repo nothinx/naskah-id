@@ -42,7 +42,7 @@ kontrak itu.
 ## Langkah 4: periksa fakta
 
 - Perintah pemasangan, nama berkas, dan nama repo sama dengan versi sebelumnya.
-- Angka baru di README hanya berasal dari uji yang tercatat: 4 temuan dan 6 yang terlewat pada
+- Angka baru di README hanya berasal dari uji yang tercatat: 5 temuan dan 5 yang terlewat pada
   `contoh/korpus/uji-abstrak-pendidikan.md`.
 
 ## Langkah 5: masalah yang sama di berkas lain
