@@ -87,6 +87,7 @@ Perbaiki sesuai batas pekerjaan. Rujukan per masalah:
 | Ejaan, kata depan, gabungan kata, angka, satuan, tanda baca | `references/ejaan-eyd-v.md` |
 | Kata tidak baku | `references/kata-baku.md` |
 | Rujukan dan cara menyitir | `references/sitasi.md` |
+| Menyambungkan alat pencarian rujukan | `references/alat-riset.md` |
 | Abstrak, pendahuluan, tinjauan pustaka, metode, hasil, simpulan | `references/bagian-naskah.md` |
 | Contoh paragraf sebelum dan sesudah | `contoh/` |
 
@@ -115,10 +116,17 @@ ini sunting bahasa atau ikut menyusun substansi.
 
 Pakai alat yang tersedia, dalam urutan ini:
 
-1. **Consensus** untuk sintesis temuan ("apa kata riset tentang X").
-2. **OpenAlex** untuk metadata, abstrak, BibTeX, dan cek keberadaan karya.
-3. Sumber lain bila ada: PubMed (kesehatan), arXiv atau alphaXiv (praterbit), Crossref (DOI),
-   Garuda dan SINTA (jurnal Indonesia).
+1. **Consensus** (MCP) untuk sintesis temuan ("apa kata riset tentang X").
+2. **OpenAlex** untuk metadata, abstrak, BibTeX, dan cek keberadaan karya. Selalu tersedia
+   lewat `python scripts/openalex.py` (cari, doi, bib, cek, dikutip) dari folder skill ini.
+3. Sumber lain bila ada: PubMed (kesehatan), alphaXiv (praterbit), Crossref (DOI), Garuda dan
+   SINTA (jurnal Indonesia).
+
+Saat pekerjaan pertama yang butuh rujukan dalam satu sesi, periksa alat mana yang tersedia.
+Bila Consensus, alphaXiv, atau PubMed belum tersambung, tawarkan sekali kepada pengguna cara
+menyambungkannya sesuai agen yang dipakai (perintahnya di `references/alat-riset.md`). Jangan
+menjalankan perintah pemasangan tanpa persetujuan. Bila pengguna menolak, lanjutkan dengan
+`scripts/openalex.py`.
 
 Setiap rujukan yang masuk naskah harus sudah dicek keberadaannya dan isinya memang mendukung
 kalimat yang mengutipnya. Bila tidak ada alat pencarian sama sekali, jangan menebak judul,

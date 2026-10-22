@@ -81,17 +81,40 @@ ternyata tidak ada.
 
 ## Pemasangan
 
-### Lewat `npx skills` (Claude Code, Codex, Cursor, Gemini CLI, dan agen lain)
+### Lewat `npx skills` (cara utama, untuk semua agen)
 
-Butuh Node.js 18 atau lebih baru.
+Butuh Node.js 18 atau lebih baru. Satu perintah ini bekerja untuk Claude Code, Codex, Cursor,
+Gemini CLI, GitHub Copilot, Windsurf, OpenCode, Cline, Kiro, Antigravity, dan puluhan agen
+lain yang mendukung format Agent Skills.
 
 ```bash
 npx skills add nothinx/naskah-id        # untuk proyek di folder ini saja
 npx skills add nothinx/naskah-id -g     # untuk semua proyek
 ```
 
-Perintah ini menanyakan agen mana yang dipasangi. Untuk memperbarui skill, jalankan ulang
-perintah yang sama.
+Tanpa opsi tambahan, perintah ini menanyakan agen mana yang dipasangi. Untuk langsung memilih
+agen, tambahkan `-a` diikuti nama agen, dipisah spasi:
+
+| Agen | Nama untuk `-a` | Lokasi skill di proyek |
+| --- | --- | --- |
+| Claude Code | `claude-code` | `.claude/skills/naskah-id` |
+| Codex | `codex` | `.agents/skills/naskah-id` |
+| Cursor | `cursor` | `.agents/skills/naskah-id` |
+| Gemini CLI | `gemini-cli` | `.agents/skills/naskah-id` |
+| GitHub Copilot | `github-copilot` | `.agents/skills/naskah-id` |
+| OpenCode | `opencode` | `.agents/skills/naskah-id` |
+| Cline | `cline` | `.agents/skills/naskah-id` |
+| Antigravity | `antigravity` | `.agents/skills/naskah-id` |
+| Windsurf | `windsurf` | `.windsurf/skills/naskah-id` |
+| Kiro | `kiro-cli` | `.kiro/skills/naskah-id` |
+
+```bash
+npx skills add nothinx/naskah-id -a claude-code codex cursor gemini-cli github-copilot -y
+```
+
+Lokasi di tabel adalah hasil pemasangan tingkat proyek yang diuji pada 22 Oktober 2026. Daftar
+lengkap nama agen muncul bila `-a` diberi nama yang tidak dikenal. Untuk memperbarui:
+`npx skills update naskah-id`.
 
 ### Claude Code sebagai plugin
 
@@ -111,7 +134,8 @@ git clone https://github.com/nothinx/naskah-id.git ~/.codex/skills/naskah-id
 ```
 
 Ganti `~/.codex/skills` dengan folder skill agen Anda, misalnya `~/.claude/skills` untuk
-Claude Code atau `~/.cursor/skills` untuk Cursor. Di Windows, `~` berarti folder pengguna
+Claude Code atau `~/.agents/skills`, folder bersama yang dibaca Codex, Gemini CLI, GitHub
+Copilot, dan agen lain yang mengikuti format Agent Skills. Di Windows, `~` berarti folder pengguna
 (`C:\Users\<nama-pengguna>`). Berkas `agents/openai.yaml` untuk Codex sudah disertakan. Untuk
 memperbarui, jalankan `git pull` di folder itu.
 
@@ -122,6 +146,20 @@ memperbarui, jalankan `git pull` di folder itu.
    kompres ulang.
 2. Di Claude.ai, buka pengaturan, bagian skill, lalu unggah ZIP itu sebagai skill kustom.
    Bila diminta, aktifkan dulu fitur eksekusi kode.
+
+### Alat riset (opsional)
+
+Untuk mencari dan mengecek rujukan, skill memakai alat berikut:
+
+- **OpenAlex**: `scripts/openalex.py` ikut terpasang dan langsung bisa dipakai, tanpa akun.
+- **Consensus dan alphaXiv**: server MCP yang perlu login. Pada plugin Claude Code, keduanya
+  ikut terpasang lewat `.mcp.json`; ketik `/mcp` untuk masuk.
+- **PubMed**: konektor claude.ai.
+
+Bila alat itu belum tersambung, agen menawarkan cara menyambungkannya saat pertama kali
+pekerjaan Anda butuh rujukan. Perintah dan potongan konfigurasi untuk Claude Code, Codex,
+claude.ai, Cursor, Gemini CLI, GitHub Copilot, Windsurf, dan OpenCode ada di
+[references/alat-riset.md](references/alat-riset.md).
 
 ### Cek pemasangan
 
@@ -161,8 +199,9 @@ pandang, dan istilah bidangnya. Bila tidak, agen mengatakan bahwa konvensi jurna
 5. **Serahkan.** Teks, catatan perubahan, penanda yang tersisa, dan draf pernyataan penggunaan
    AI.
 
-Untuk mencari rujukan, skill menganjurkan Consensus, OpenAlex, PubMed, arXiv, Crossref, dan
-Garuda atau SINTA. Skill tetap berfungsi tanpa alat-alat itu.
+Untuk mencari rujukan, skill memakai `scripts/openalex.py`, ditambah Consensus, alphaXiv,
+PubMed, Crossref, dan Garuda atau SINTA bila tersedia. Tanpa alat apa pun, skill tetap bekerja
+dan menandai klaim yang belum berujukan dengan `[PERLU RUJUKAN: …]`.
 
 ## Isi repo
 
@@ -178,7 +217,10 @@ Garuda atau SINTA. Skill tetap berfungsi tanpa alat-alat itu.
 | `references/sitasi.md` | Kejujuran rujukan, cara mengecek, gaya sitasi |
 | `references/bagian-naskah.md` | Abstrak, pendahuluan, tinjauan pustaka, metode, hasil, simpulan |
 | `contoh/` | Paragraf sebelum dan sesudah dari teknik, kesehatan, sosial, pendidikan, sejarah |
+| `references/alat-riset.md` | Cara menyambungkan OpenAlex, Consensus, alphaXiv, dan PubMed |
 | `scripts/periksa.py` | Pemeriksa pola berbasis regex, hanya pustaka standar Python |
+| `scripts/openalex.py` | Cari, cek, dan kutip karya lewat OpenAlex, hanya pustaka standar Python |
+| `.mcp.json` | Server MCP Consensus dan alphaXiv untuk plugin Claude Code |
 | `evals/cases.json` | Kasus uji perilaku agen beserta kriteria lulus |
 
 ## Pemeriksa cepat
@@ -253,4 +295,6 @@ itu dirilis dengan CC BY-SA 4.0.
 `naskah-id` is an agent skill for writing and editing Indonesian academic texts (journal
 articles, theses, grant proposals) in natural, standard Indonesian (EYD V, KBBI). It never
 changes numbers, results, or citations, never invents references, and is not a tool for
-evading AI detectors. Install with `npx skills add nothinx/naskah-id`. MIT licensed.
+evading AI detectors. Install with `npx skills add nothinx/naskah-id` for Claude Code, Codex,
+Cursor, Gemini CLI, GitHub Copilot, Windsurf, OpenCode, and other Agent Skills hosts. It ships
+an OpenAlex CLI for reference checks and MCP setup for Consensus and alphaXiv. MIT licensed.
