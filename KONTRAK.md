@@ -46,8 +46,9 @@ pembimbing.
 
 Pola dalam `references/pola-ai.md` adalah sinyal gaya, bukan bukti bahwa sebuah teks ditulis
 mesin. Penulis manusia, terutama yang terbiasa membaca literatur berbahasa Inggris, juga
-menulis `di mana` dan `memainkan peran`. Jangan memakai skill ini atau `scripts/periksa.py`
-untuk menuduh mahasiswa atau menilai integritas akademik seseorang.
+menulis `di mana` dan `memainkan peran`. Hasil skill ini dan `scripts/periksa.py` jangan
+dijadikan bukti bahwa seorang mahasiswa memakai AI, dan jangan dipakai untuk menilai
+kejujuran akademik seseorang.
 
 ## Membedakan sunting dan susun
 

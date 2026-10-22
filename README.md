@@ -63,9 +63,9 @@ mengarang angka.
 Skill ini memperbaiki ejaan dan kalimat, menyusun bagian naskah dari bahan yang Anda berikan,
 dan menandai klaim yang belum didukung rujukan.
 
-Skill ini **bukan** alat untuk meloloskan teks dari detektor AI atau Turnitin, dan **bukan**
-detektor AI. Pola bahasa tidak bisa membuktikan siapa yang menulis sebuah teks, jadi jangan
-memakai skill ini untuk menuduh mahasiswa.
+Skill ini tidak dibuat untuk mengakali Turnitin atau detektor AI. Skill ini juga bukan
+detektor AI. Gaya bahasa tidak bisa menunjukkan apakah sebuah tulisan dibuat oleh manusia
+atau AI, jadi hasilnya jangan dijadikan bukti bahwa seorang mahasiswa memakai AI.
 
 Agen yang memakai skill ini terikat [kontrak tanggung jawab](KONTRAK.md):
 
