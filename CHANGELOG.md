@@ -9,8 +9,16 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/). Ve
 
 - Eval penuh 25 kasus: tanpa skill 75/76, dengan skill 76/76 kriteria penilai (agen Gemini 4
   Argon tanpa akses perintah, penilai Claude Opus). Selisihnya belum bermakna.
+- Eval 25 kasus dengan agen Claude Haiku (satu putaran, penilai Claude Opus): tanpa skill 56/76,
+  dengan skill 70/76 kriteria penilai; cek otomatis 17/25 menjadi 19/25. Temuan `periksa.py` per
+  100 kata turun dari K 0,49 / G 0,28 / AI 0,23 menjadi 0,26 / 0,05 / 0,00.
+- Pada Gemini, temuan gaya per 100 kata turun dari 0,16 menjadi 0,03 (28 kasus).
 
 ### Ditambahkan
+
+- `evals/banding.py`: membandingkan mutu tulisan dua folder jawaban lewat temuan `periksa.py` per
+  100 kata dan, dengan `--penilai`, penilaian berpasangan buta pada empat aspek.
+- Tiga kasus eval menulis panjang; total 28.
 
 - Dukungan berkas `.docx` di `scripts/periksa.py` (termasuk `--banding`) memakai pustaka standar
   Python; teks diambil per paragraf dari `word/document.xml` dengan nomor baris sama dengan nomor

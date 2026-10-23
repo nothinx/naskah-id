@@ -244,6 +244,7 @@ dan menandai klaim yang belum berujukan dengan `[PERLU RUJUKAN: …]`.
 | `.mcp.json` | Server MCP Consensus dan alphaXiv untuk plugin Claude Code |
 | `evals/cases.json` | Kasus uji perilaku agen beserta kriteria lulus dan cek otomatis |
 | `evals/jalankan.py` | Runner eval: menjalankan agen, mengecek otomatis, dan memanggil model penilai |
+| `evals/banding.py` | Pembanding mutu tulisan dua folder jawaban: temuan `periksa.py` per 100 kata dan penilaian berpasangan buta |
 | `CHANGELOG.md` | Riwayat versi |
 
 ## Pemeriksa cepat
@@ -346,6 +347,23 @@ Selisihnya belum bermakna. Model dasarnya sudah lulus hampir semua kriteria, dan
 yang semula gagal dengan skill baru lulus setelah `SKILL.md` diperbaiki lalu dijalankan ulang
 sekali. Agen dalam pengujian ini tidak bisa menjalankan perintah, jadi `periksa.py` dan
 `openalex.py` tidak ikut teruji.
+
+Pada model yang lebih lemah, manfaatnya terlihat jelas. Hasil 23 Oktober 2026 untuk 25 kasus yang
+sama, dengan agen Claude Haiku (satu putaran) dan penilai Claude Opus:
+
+| Kondisi | Cek otomatis | Kriteria penilai | Temuan K / G / AI per 100 kata |
+| --- | --- | --- | --- |
+| Tanpa skill | 17/25 | 56/76 | 0,49 / 0,28 / 0,23 |
+| Dengan skill | 19/25 | 70/76 | 0,26 / 0,05 / 0,00 |
+
+Temuan per 100 kata dihitung `evals/banding.py` dari `periksa.py` (K kata baku, G gaya, AI pola
+AI; SG-04 tidak dihitung). Pada Gemini, skor kriteria hampir sama, tetapi temuan gaya turun dari
+0,16 menjadi 0,03 per 100 kata (28 kasus). `evals/banding.py --penilai` juga bisa menilai mutu
+tulisan secara berpasangan dan buta; hasil penilaian buta belum tersedia.
+
+```bash
+python evals/banding.py evals/hasil/dengan-skill evals/hasil/tanpa-skill --penilai "claude -p"
+```
 
 ## Pernyataan penggunaan AI
 
