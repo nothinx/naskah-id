@@ -36,6 +36,11 @@ def jalankan(perintah, masukan):
     return r.stdout
 
 
+def teks_hasil(jawaban):
+    """Bagian jawaban sebelum catatan perubahan."""
+    return re.split(r"(?im)^[#*>\s]*(?:catatan|daftar|ringkasan|rincian) perubahan.*$", jawaban)[0]
+
+
 def cek_otomatis(kasus, jawaban):
     """Daftar kegagalan cek mesin; kosong berarti lulus."""
     gagal = []
@@ -44,7 +49,7 @@ def cek_otomatis(kasus, jawaban):
         gagal += [f"{jenis.lower()} hilang: {x}" for jenis in a for x in (a[jenis] - j[jenis]).elements()]
     gagal += [f"tidak ditemukan: /{rx}/" for rx in kasus.get("harus_ada", []) if not re.search(rx, jawaban)]
     # catatan perubahan wajar mengutip teks asli, jadi pola terlarang hanya dicari di teks hasil
-    hasil = re.split(r"(?im)^[#*>\s]*(?:catatan|daftar|ringkasan|rincian) perubahan.*$", jawaban)[0]
+    hasil = teks_hasil(jawaban)
     gagal += [f"terlarang muncul: /{rx}/" for rx in kasus.get("tidak_boleh_ada", []) if re.search(rx, hasil)]
     return gagal
 

@@ -335,6 +335,55 @@
         "Awalan di- pada verba ditulis serangkai, sedangkan kata depan 'di laboratorium' tetap terpisah.",
         "Tidak ada perubahan lain di luar ejaan."
       ]
+    },
+    {
+      "id": "tulis-latar-belakang",
+      "prompt": "Tulis dua paragraf latar belakang untuk proposal skripsi dari catatan berikut. Catatan: (1) Kabupaten Contoh punya 214 posyandu, 61 di antaranya masih mencatat penimbangan balita di buku. (2) Prevalensi stunting kabupaten 27,1% (data dinas kesehatan 2025). (3) Kader mengeluh rekap bulanan butuh 2-3 hari. (4) Belum ada penelitian tentang aplikasi pencatatan posyandu di kabupaten ini.",
+      "bahan": "Catatan: (1) Kabupaten Contoh punya 214 posyandu, 61 di antaranya masih mencatat penimbangan balita di buku. (2) Prevalensi stunting kabupaten 27,1% (data dinas kesehatan 2025). (3) Kader mengeluh rekap bulanan butuh 2-3 hari. (4) Belum ada penelitian tentang aplikasi pencatatan posyandu di kabupaten ini.",
+      "tidak_boleh_ada": [
+        "[Dd]i era",
+        "tidak dapat dipungkiri",
+        "memainkan peran"
+      ],
+      "kriteria": [
+        "Semua angka (214, 61, 27,1%, 2025, 2-3 hari) dipakai persis dan tidak ada angka atau rujukan baru.",
+        "Paragraf mengalir dari masalah lapangan ke celah penelitian tanpa pembuka kosmik atau klise.",
+        "Klaim yang butuh rujukan di luar catatan diberi [PERLU RUJUKAN: …], bukan dikarang.",
+        "Bahasanya baku dan natural, bukan terjemahan."
+      ]
+    },
+    {
+      "id": "sunting-tinjauan-panjang",
+      "prompt": "Rapikan paragraf tinjauan pustaka ini, terasa seperti tulisan AI: Di era globalisasi yang semakin pesat ini, tidak dapat dipungkiri bahwa teknologi informasi memainkan peran yang sangat penting dalam berbagai aspek kehidupan, termasuk di dalam dunia pendidikan. Hal ini dapat dilihat dari semakin banyaknya sekolah-sekolah yang mulai mengimplementasikan penggunaan e-learning dalam proses kegiatan belajar mengajar (Santoso, 2021). Selain itu, menurut Wijaya (2022) bahwa e-learning dapat meningkatkan motivasi belajar siswa secara signifikan. Lebih lanjut, Pratama (2023) juga menyatakan bahwa e-learning merupakan salah satu dari solusi yang inovatif untuk mengatasi berbagai permasalahan yang ada di dalam dunia pendidikan. Dengan demikian, dapat disimpulkan bahwa e-learning sangat penting untuk diterapkan.",
+      "bahan": "Di era globalisasi yang semakin pesat ini, tidak dapat dipungkiri bahwa teknologi informasi memainkan peran yang sangat penting dalam berbagai aspek kehidupan, termasuk di dalam dunia pendidikan. Hal ini dapat dilihat dari semakin banyaknya sekolah-sekolah yang mulai mengimplementasikan penggunaan e-learning dalam proses kegiatan belajar mengajar (Santoso, 2021). Selain itu, menurut Wijaya (2022) bahwa e-learning dapat meningkatkan motivasi belajar siswa secara signifikan. Lebih lanjut, Pratama (2023) juga menyatakan bahwa e-learning merupakan salah satu dari solusi yang inovatif untuk mengatasi berbagai permasalahan yang ada di dalam dunia pendidikan. Dengan demikian, dapat disimpulkan bahwa e-learning sangat penting untuk diterapkan.",
+      "tidak_boleh_ada": [
+        "[Dd]i era globalisasi",
+        "tidak dapat dipungkiri",
+        "memainkan peran",
+        "menurut Wijaya \\(2022\\) bahwa",
+        "salah satu dari"
+      ],
+      "kriteria": [
+        "Ketiga sitasi (Santoso, 2021; Wijaya, 2022; Pratama, 2023) tetap melekat pada klaimnya masing-masing.",
+        "Klise, pleonasme ('sekolah-sekolah', 'proses kegiatan'), dan 'menurut … bahwa' diperbaiki.",
+        "Klaim 'secara signifikan' dan 'solusi yang inovatif' tidak diperkuat; simpulan umum di akhir tidak dibesar-besarkan.",
+        "Hasilnya lebih ringkas dan terbaca seperti tulisan peneliti, bukan sekadar sinonim yang ditukar."
+      ]
+    },
+    {
+      "id": "abstrak-dari-hasil",
+      "prompt": "Buat abstrak 150-200 kata untuk jurnal SINTA bidang pendidikan dari hasil berikut. Hasil: 120 siswa SMK, desain kuasi-eksperimen. Kelompok e-modul rerata posttest 78,4, kelompok kontrol 71,2; uji t p = 0,003. Skor motivasi naik dari 3,1 ke 3,6 (skala 5). Lokasi: dua SMK negeri di Kota Contoh, semester genap 2025.",
+      "bahan": "Hasil: 120 siswa SMK, desain kuasi-eksperimen. Kelompok e-modul rerata posttest 78,4, kelompok kontrol 71,2; uji t p = 0,003. Skor motivasi naik dari 3,1 ke 3,6 (skala 5). Lokasi: dua SMK negeri di Kota Contoh, semester genap 2025.",
+      "tidak_boleh_ada": [
+        "[Dd]i era",
+        "tidak dapat dipungkiri"
+      ],
+      "kriteria": [
+        "Angka 120, 78,4, 71,2, p = 0,003, 3,1, 3,6, dan 2025 muncul persis.",
+        "Tidak ada temuan, saran kebijakan, atau angka yang tidak ada di bahan; yang kurang ditandai [PERLU DATA: …].",
+        "Struktur abstrak lengkap (tujuan, metode, hasil, simpulan) dengan klaim yang tidak melebihi data.",
+        "Bahasanya baku, ringkas, dan natural."
+      ]
     }
   ]
 }
