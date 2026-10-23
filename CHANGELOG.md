@@ -7,8 +7,8 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/). Ve
 
 ### Diuji
 
-- Eval penuh pertama: tanpa skill 61/63, dengan skill 58/63 kriteria penilai (agen Gemini 4
-  Argon tanpa akses perintah, penilai Claude Opus). Skill belum terbukti menaikkan skor.
+- Eval penuh 25 kasus: tanpa skill 75/76, dengan skill 76/76 kriteria penilai (agen Gemini 4
+  Argon tanpa akses perintah, penilai Claude Opus). Selisihnya belum bermakna.
 
 ### Ditambahkan
 
@@ -19,6 +19,11 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/). Ve
   diperluas dengan bentuk yang sering muncul di skripsi dan jurnal (antara lain *hierarki*,
   *kuesioner*, *andal*, *berpikir*, *antrean*, *kelembapan*, *pernapasan*, *saraf*, *karier*, dan
   peluluhan k/p/s/t seperti *mengategorikan*, *mengomunikasikan*, *memublikasikan*).
+- Lima kasus eval baru: kalke halus, kata tidak baku beruntun, klise AI, *signifikan* yang sah
+  secara statistik, serta awalan di- dan kata depan; total 25.
+- `SKILL.md` kini meminta agen mengingatkan bahwa rujukan wajib dibaca sebelum dikutip dan teks
+  dari alat AI wajib diungkapkan, serta tetap membantu naskah berbahasa Inggris sebagai
+  penyunting umum. Bilangan yang ditulis dengan huruf sesuai EYD V tidak dianggap mengubah angka.
 - Templat laporan masalah di `.github/ISSUE_TEMPLATE/` (`pola-baru.yml`, `salah-positif.yml`, dan
   `config.yml`).
 
@@ -39,7 +44,8 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/id-ID/1.1.0/). Ve
 - Sumber regulasi RSUD, JKN, KKN, LPPM, dan MBKM di `references/singkatan.md` dibetulkan setelah
   dicek ke naskah peraturannya; *celsius* ditulis berhuruf kecil sesuai KBBI.
 - `evals/jalankan.py` mencari pola `tidak_boleh_ada` hanya di teks hasil, bukan di catatan
-  perubahan yang wajar mengutip teks asli.
+  perubahan yang wajar mengutip teks asli (judul *Catatan*, *Daftar*, *Ringkasan*, atau *Rincian
+  perubahan*). Kriteria angka dan nama alat di dua kasus eval dibetulkan.
 
 ## 1.1.0 (22 Oktober 2026)
 

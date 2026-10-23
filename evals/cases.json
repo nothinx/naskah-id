@@ -127,7 +127,7 @@
       "prompt": "Naskah saya mau dikirim ke jurnal Elsevier. Kamu tadi membantu merapikan bahasa bab 2 dan 3. Apa yang harus saya cantumkan?",
       "kriteria": [
         "Agen menyusun draf pernyataan penggunaan AI dengan format Elsevier, di bagian tersendiri sebelum Daftar Pustaka.",
-        "Pernyataan menyebut nama alat, tugasnya (penyuntingan bahasa bab 2 dan 3), dan tanggung jawab penulis.",
+        "Pernyataan menyebut alat AI yang dipakai (nama, atau penanda seperti [NAMA ALAT] untuk diisi penulis), tugasnya (penyuntingan bahasa bab 2 dan 3), dan tanggung jawab penulis.",
         "Agen tidak mencantumkan AI sebagai penulis."
       ]
     },
@@ -196,7 +196,7 @@
       ],
       "kriteria": [
         "Nominalisasi diganti verba langsung (mengukur, membandingkan, turun).",
-        "Angka 3 dan 2,4% tidak berubah.",
+        "Nilai 3 dan 2,4% tidak berubah; '3 kali' boleh ditulis 'tiga kali' sesuai EYD V.",
         "'antara … dengan' menjadi 'antara … dan' atau dihilangkan."
       ]
     },
@@ -244,6 +244,96 @@
         "Agen tidak menebak kepanjangan PKB dan UPT tanpa dasar; ia memakai konteks (uji emisi kendaraan: pengujian kendaraan bermotor) dengan menyebut asumsinya, atau menanyakan/menandai [PERLU DATA: …].",
         "Angka 37 tidak berubah.",
         "Tidak ada fakta baru tentang lokasi atau lembaga yang ditambahkan."
+      ]
+    },
+    {
+      "id": "kalke-halus",
+      "prompt": "Rapikan bahasanya: Dalam rangka untuk meningkatkan hasil panen, petani melakukan pemupukan yang mana dilakukan setiap dua minggu. Adapun tujuan dari penelitian ini adalah untuk mengetahui pengaruh dosis pupuk terhadap hasil panen padi.",
+      "bahan": "Dalam rangka untuk meningkatkan hasil panen, petani melakukan pemupukan yang mana dilakukan setiap dua minggu. Adapun tujuan dari penelitian ini adalah untuk mengetahui pengaruh dosis pupuk terhadap hasil panen padi.",
+      "tidak_boleh_ada": [
+        "[Dd]alam rangka untuk",
+        "yang mana",
+        "tujuan dari penelitian"
+      ],
+      "kriteria": [
+        "Pleonasme 'dalam rangka untuk' dan perangkai 'yang mana' dibuang.",
+        "'tujuan dari penelitian ini adalah untuk' dirampingkan.",
+        "Isi (dua minggu, dosis pupuk, padi) tidak berubah."
+      ]
+    },
+    {
+      "id": "kata-baku-beruntun",
+      "prompt": "Cek ejaannya saja, jangan ubah kalimat: Analisa data memakai sistim skoring. Resiko bias dinilai dari praktek pengambilan sampel dan kwalitas kuisioner.",
+      "bahan": "Analisa data memakai sistim skoring. Resiko bias dinilai dari praktek pengambilan sampel dan kwalitas kuisioner.",
+      "harus_ada": [
+        "[Aa]nalisis",
+        "sistem",
+        "[Rr]isiko",
+        "praktik",
+        "kualitas",
+        "kuesioner"
+      ],
+      "tidak_boleh_ada": [
+        "[Aa]nalisa\b",
+        "sistim",
+        "[Rr]esiko",
+        "praktek",
+        "kwalitas",
+        "kuisioner"
+      ],
+      "kriteria": [
+        "Keenam kata tidak baku diganti bentuk bakunya.",
+        "Susunan kalimat tidak diubah karena pengguna hanya meminta koreksi ejaan."
+      ]
+    },
+    {
+      "id": "klise-ai-indonesia",
+      "prompt": "Sunting supaya tidak terdengar seperti tulisan AI: Di era digital ini, tidak dapat dipungkiri bahwa media sosial memainkan peran penting dalam promosi UMKM. Lebih lanjut, penelitian ini secara signifikan berkontribusi pada literatur pemasaran digital.",
+      "bahan": "Di era digital ini, tidak dapat dipungkiri bahwa media sosial memainkan peran penting dalam promosi UMKM. Lebih lanjut, penelitian ini secara signifikan berkontribusi pada literatur pemasaran digital.",
+      "tidak_boleh_ada": [
+        "[Dd]i era digital",
+        "tidak dapat dipungkiri",
+        "memainkan peran",
+        "secara signifikan"
+      ],
+      "kriteria": [
+        "Pembuka kosmik dan 'tidak dapat dipungkiri' dibuang.",
+        "'secara signifikan' tanpa uji statistik dibuang atau dilemahkan, bukan dipertahankan sebagai klaim.",
+        "Tidak ada data atau klaim baru."
+      ]
+    },
+    {
+      "id": "pertahankan-signifikan-statistik",
+      "prompt": "Rapikan bahasanya: Penelitian ini menggunakan uji t berpasangan. Data dianalisis dengan SPSS 26. Terdapat perbedaan yang signifikan antara skor pretes dan postes (p < 0,05).",
+      "bahan": "Penelitian ini menggunakan uji t berpasangan. Data dianalisis dengan SPSS 26. Terdapat perbedaan yang signifikan antara skor pretes dan postes (p < 0,05).",
+      "harus_ada": [
+        "signifikan",
+        "[Pp]enelitian ini",
+        "dianalisis"
+      ],
+      "kriteria": [
+        "'signifikan' dipertahankan karena bermakna statistik dan didukung nilai p.",
+        "Pasif 'dianalisis' dan 'penelitian ini' tidak diganti karena lazim di bagian Metode.",
+        "Agen tidak memaksakan perubahan bila kalimatnya sudah baik."
+      ]
+    },
+    {
+      "id": "kata-depan-awalan",
+      "prompt": "Koreksi ejaan: Sampel di ambil dari tiga desa lalu di uji di laboratorium. Hasilnya di bandingkan dengan standar SNI.",
+      "bahan": "Sampel di ambil dari tiga desa lalu di uji di laboratorium. Hasilnya di bandingkan dengan standar SNI.",
+      "harus_ada": [
+        "diambil",
+        "diuji di laboratorium",
+        "dibandingkan"
+      ],
+      "tidak_boleh_ada": [
+        "di ambil",
+        "di uji\b",
+        "di bandingkan"
+      ],
+      "kriteria": [
+        "Awalan di- pada verba ditulis serangkai, sedangkan kata depan 'di laboratorium' tetap terpisah.",
+        "Tidak ada perubahan lain di luar ejaan."
       ]
     }
   ]

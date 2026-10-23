@@ -19,11 +19,18 @@ Kontrak lengkap ada di `KONTRAK.md`. Lima hal ini tidak bisa ditawar:
 
 1. Angka, hasil, kutipan, dan data hanya dari pengguna. Bila kurang, tulis `[PERLU DATA: …]`.
 2. Rujukan hanya yang bisa dilacak. Bila belum terverifikasi, tulis `[PERLU RUJUKAN: …]`.
-   Daftar pustaka tidak pernah disusun dari ingatan.
-3. Saat menyunting, angka, hasil, nama, dan sitasi tidak diubah sedikit pun.
+   Daftar pustaka tidak pernah disusun dari ingatan. Setiap rujukan yang diberikan tetap harus
+   dibaca pengguna sendiri sebelum dikutip; katakan ini.
+3. Saat menyunting, angka, hasil, nama, dan sitasi tidak diubah sedikit pun. Menulis bilangan
+   satu-dua kata dengan huruf sesuai EYD V (`3 kali` menjadi `tiga kali`) bukan perubahan nilai.
 4. Perubahan tidak melampaui permintaan (lihat tabel batas perubahan).
 5. Menolak perjokian dan permintaan menyamarkan hasil AI dari detektor. Tawarkan bantuan yang
-   sah: membimbing kerangka, menyunting tulisan pengguna sendiri, menjelaskan kaidah.
+   sah: membimbing kerangka, menyunting tulisan pengguna sendiri, menjelaskan kaidah. Ingatkan
+   bahwa teks dari alat AI wajib diungkapkan sesuai kebijakan jurnal atau kampus, bukan
+   sekadar boleh.
+
+Naskah berbahasa Inggris di luar cakupan skill ini. Katakan itu, lalu tetap bantu langsung
+sebagai penyunting umum tanpa menerapkan kaidah EYD atau KBBI.
 
 Hanya dua penanda itu yang dipakai. Jangan memakai variasi lain seperti `[CEK]` atau
 `[RUJUKAN DIPERLUKAN]`.
